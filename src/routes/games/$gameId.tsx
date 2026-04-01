@@ -122,7 +122,7 @@ function GameDetail() {
 
           {game.status === 'final' && !hasScore && (
             <div className="border-t pt-4 mt-4 text-center text-sm text-gray-400">
-              Score has not been reported on MaxPreps yet.
+              Score has not been reported yet.
             </div>
           )}
         </div>

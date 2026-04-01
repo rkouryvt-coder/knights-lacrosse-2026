@@ -2,167 +2,98 @@ import { createServerFn } from '@tanstack/react-start'
 import { games as staticGames } from '@/data/games'
 import type { Game } from '@/data/games'
 
-const MAXPREPS_URL =
-  'https://www.maxpreps.com/il/mt-prospect/prospect-knights/lacrosse/schedule/'
+const RSCHOOL_URL =
+  'https://prospecthighschool.rschoolteams.com/page/3000'
 
-// Attempt to parse the MaxPreps __NEXT_DATA__ script tag for live schedule data.
-// MaxPreps is a Next.js app; it embeds dehydrated React Query state in the page.
-function parseMaxPrepsHtml(html: string): Array<Game> | null {
+// Attempt to extract live score data from the rschoolteams schedule page.
+// rschoolteams renders a server-side HTML table; we look for score cells of the
+// form "W 12-8" / "L 5-10" and correlate them with our static schedule by
+// matching opponent names. Falls back to static data on any failure.
+
+function stripTags(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+}
+
+// Returns a map of opponent name (lowercased) → { knightsScore, opponentScore }.
+function parseRschoolHtml(
+  html: string,
+): Map<string, { knightsScore: number; opponentScore: number }> | null {
   try {
-    const match = html.match(
-      /<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
-    )
-    if (!match) return null
+    const scores = new Map<string, { knightsScore: number; opponentScore: number }>()
 
-    const nextData = JSON.parse(match[1]) as Record<string, unknown>
+    // rschoolteams score format (from team's POV): "W 12-8" or "L 5-10"
+    // Also handle plain scores like "12-8" that appear inside a W/L cell.
+    const scoreRe = /\b([WL])\s+(\d{1,3})\s*[-–]\s*(\d{1,3})\b/i
 
-    // MaxPreps serialises React Query cache inside dehydratedState.queries.
-    // Walk every query's state.data looking for an array with schedule-shaped objects.
-    const queries: Array<unknown> =
-      (
-        nextData?.props as Record<string, unknown> | undefined
-      )?.pageProps
-        ? (
-            (nextData.props as Record<string, unknown>)
-              .pageProps as Record<string, unknown>
-          )?.dehydratedState
-          ? (
-              (
-                (nextData.props as Record<string, unknown>)
-                  .pageProps as Record<string, unknown>
-              ).dehydratedState as Record<string, unknown>
-            )?.queries as Array<unknown>
-          : []
-        : []
+    // Split HTML into table rows so we can search row-by-row.
+    const rowRe = /<tr[\s>][\s\S]*?<\/tr>/gi
+    let rowMatch: RegExpExecArray | null
 
-    if (!Array.isArray(queries)) return null
+    while ((rowMatch = rowRe.exec(html)) !== null) {
+      const rowHtml = rowMatch[0]
+      const scoreMatch = scoreRe.exec(rowHtml)
+      if (!scoreMatch) continue
 
-    for (const query of queries) {
-      const data = (
-        (query as Record<string, unknown>)?.state as Record<string, unknown>
-      )?.data
+      const wl = scoreMatch[1].toUpperCase()
+      const a = parseInt(scoreMatch[2], 10)
+      const b = parseInt(scoreMatch[3], 10)
 
-      const scheduleArray = findScheduleArray(data)
-      if (scheduleArray) {
-        const parsed = parseScheduleArray(scheduleArray)
-        if (parsed && parsed.length > 0) return parsed
+      // "W 12-8" → Knights won, knights=12 opp=8
+      // "L 5-10" → Knights lost, knights=5 opp=10
+      const knightsScore = wl === 'W' ? a : a
+      const opponentScore = wl === 'W' ? b : b
+
+      // Match opponent name against our static schedule
+      const rowText = stripTags(rowHtml).toLowerCase()
+      for (const game of staticGames) {
+        if (rowText.includes(game.opponent.toLowerCase())) {
+          scores.set(game.opponent.toLowerCase(), { knightsScore, opponentScore })
+          break
+        }
       }
     }
-    return null
+
+    // Also try a broader scan: look for score patterns anywhere in the page
+    // and associate with the nearest opponent name mention
+    if (scores.size === 0) {
+      const broadScoreRe = /\b([WL])\s+(\d{1,3})\s*[-–]\s*(\d{1,3})\b/gi
+      let m: RegExpExecArray | null
+      while ((m = broadScoreRe.exec(html)) !== null) {
+        const wl = m[1].toUpperCase()
+        const a = parseInt(m[2], 10)
+        const b = parseInt(m[3], 10)
+        const knightsScore = a
+        const opponentScore = b
+
+        // Check a surrounding window of text for an opponent name
+        const start = Math.max(0, m.index - 500)
+        const end = Math.min(html.length, m.index + 500)
+        const window = stripTags(html.slice(start, end)).toLowerCase()
+
+        for (const game of staticGames) {
+          const key = game.opponent.toLowerCase()
+          if (!scores.has(key) && window.includes(key)) {
+            // Confirm direction: W means we won so knights > opp
+            const ks = wl === 'W' ? Math.max(a, b) : Math.min(a, b)
+            const os = wl === 'W' ? Math.min(a, b) : Math.max(a, b)
+            scores.set(key, { knightsScore: ks, opponentScore: os })
+            break
+          }
+        }
+      }
+    }
+
+    return scores.size > 0 ? scores : null
   } catch {
     return null
   }
 }
 
-function findScheduleArray(data: unknown): Array<unknown> | null {
-  if (!data || typeof data !== 'object') return null
-  const obj = data as Record<string, unknown>
-
-  // Direct arrays we care about
-  for (const key of ['schedule', 'games', 'contests', 'events']) {
-    if (Array.isArray(obj[key]) && (obj[key] as Array<unknown>).length > 0) {
-      return obj[key] as Array<unknown>
-    }
-  }
-
-  // One level deeper
-  for (const val of Object.values(obj)) {
-    if (val && typeof val === 'object') {
-      const found = findScheduleArray(val)
-      if (found) return found
-    }
-  }
-  return null
-}
-
-// Best-effort map of MaxPreps schedule item to our Game type.
-// MaxPreps field names vary; we try common variants.
-function parseScheduleArray(items: Array<unknown>): Array<Game> | null {
+async function fetchLiveScores(): Promise<
+  Map<string, { knightsScore: number; opponentScore: number }> | null
+> {
   try {
-    const games: Array<Game> = []
-
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i] as Record<string, unknown>
-
-      // Date
-      const rawDate: string =
-        (item.date as string) ||
-        (item.gameDate as string) ||
-        (item.contestDate as string) ||
-        ''
-      if (!rawDate) return null
-      const date = rawDate.split('T')[0] // ISO date portion only
-
-      // Opponent
-      const opponentObj =
-        (item.opponent as Record<string, unknown>) ||
-        (item.opposingTeam as Record<string, unknown>)
-      const opponent: string =
-        (opponentObj?.name as string) ||
-        (opponentObj?.shortName as string) ||
-        (item.opponentName as string) ||
-        'Unknown'
-
-      // Home/away
-      const homeFlag =
-        (item.isHome as boolean) ??
-        ((item.location as string)?.toLowerCase() === 'home')
-      const location: 'home' | 'away' = homeFlag ? 'home' : 'away'
-      const venue: string =
-        (item.venue as string) ||
-        (item.venueName as string) ||
-        (location === 'home' ? 'Prospect High School' : `${opponent} High School`)
-
-      // Scores
-      const teamScore =
-        (item.teamScore as number | null) ??
-        (item.homeScore as number | null) ??
-        null
-      const opponentScore =
-        (item.opponentScore as number | null) ??
-        (item.awayScore as number | null) ??
-        null
-      const hasScore =
-        teamScore !== null && opponentScore !== null
-
-      // Status
-      const statusRaw = (item.status as string) || ''
-      const isFinal =
-        statusRaw.toLowerCase().includes('final') ||
-        statusRaw.toLowerCase().includes('complete') ||
-        hasScore
-      const status: 'upcoming' | 'final' = isFinal ? 'final' : 'upcoming'
-
-      // Time
-      const time: string =
-        (item.time as string) ||
-        (item.gameTime as string) ||
-        (isFinal ? 'Final' : 'TBD')
-
-      games.push({
-        id: i + 1,
-        date,
-        time,
-        opponent,
-        location,
-        venue,
-        knightsScore: location === 'home' ? teamScore : opponentScore,
-        opponentScore: location === 'home' ? opponentScore : teamScore,
-        status,
-        overtime: !!(item.isOvertime || item.overtime),
-        isConference: !!(item.isConference || item.conference),
-      })
-    }
-
-    return games.length > 0 ? games : null
-  } catch {
-    return null
-  }
-}
-
-async function fetchLiveSchedule(): Promise<Array<Game> | null> {
-  try {
-    const res = await fetch(MAXPREPS_URL, {
+    const res = await fetch(RSCHOOL_URL, {
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
@@ -174,15 +105,36 @@ async function fetchLiveSchedule(): Promise<Array<Game> | null> {
     })
     if (!res.ok) return null
     const html = await res.text()
-    return parseMaxPrepsHtml(html)
+    return parseRschoolHtml(html)
   } catch {
     return null
   }
 }
 
+// Merge live scores from rschoolteams into our static schedule.
+// Static data holds the authoritative schedule (dates, times, venues).
+// Live data provides up-to-date scores for completed games.
+function mergeScores(
+  liveScores: Map<string, { knightsScore: number; opponentScore: number }>,
+): Array<Game> {
+  return staticGames.map((game) => {
+    const live = liveScores.get(game.opponent.toLowerCase())
+    if (live) {
+      return {
+        ...game,
+        knightsScore: live.knightsScore,
+        opponentScore: live.opponentScore,
+        status: 'final' as const,
+      }
+    }
+    return game
+  })
+}
+
 export const getSchedule = createServerFn({ method: 'GET' }).handler(
   async () => {
-    const live = await fetchLiveSchedule()
-    return live ?? staticGames
+    const liveScores = await fetchLiveScores()
+    if (!liveScores) return staticGames
+    return mergeScores(liveScores)
   },
 )
