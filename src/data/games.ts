@@ -22,8 +22,8 @@ export const games: Array<Game> = [
     opponent: 'Stevenson',
     location: 'home',
     venue: 'Prospect High School',
-    knightsScore: null,
-    opponentScore: null,
+    knightsScore: 15,
+    opponentScore: 2,
     status: 'final',
   },
   {
@@ -33,9 +33,10 @@ export const games: Array<Game> = [
     opponent: 'Maine South',
     location: 'home',
     venue: 'Prospect High School',
-    knightsScore: null,
-    opponentScore: null,
+    knightsScore: 6,
+    opponentScore: 7,
     status: 'final',
+    overtime: true,
   },
   {
     id: 3,
