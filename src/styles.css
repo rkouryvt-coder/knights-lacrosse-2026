@@ -1,0 +1,23 @@
+@import "tailwindcss" source("../");
+
+@theme {
+  --color-knights-navy: #1a2744;
+  --color-knights-navy-light: #243456;
+  --color-knights-gold: #c9a227;
+  --color-knights-gold-light: #e0bc4e;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+code {
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
