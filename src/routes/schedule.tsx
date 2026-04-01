@@ -1,12 +1,15 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { games } from '@/data/games'
+import { getSchedule } from '@/lib/schedule'
 import { Calendar, MapPin } from 'lucide-react'
 
 export const Route = createFileRoute('/schedule')({
+  loader: () => getSchedule(),
   component: SchedulePage,
 })
 
 function SchedulePage() {
+  const games = Route.useLoaderData()
+
   const completedGames = games
     .filter((g) => g.status === 'final')
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -14,17 +17,18 @@ function SchedulePage() {
     .filter((g) => g.status === 'upcoming')
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const wins = completedGames.filter(
-    (g) => g.knightsScore! > g.opponentScore!,
-  ).length
-  const losses = completedGames.length - wins
+  const scoredGames = completedGames.filter(
+    (g) => g.knightsScore !== null && g.opponentScore !== null,
+  )
+  const wins = scoredGames.filter((g) => g.knightsScore! > g.opponentScore!).length
+  const losses = scoredGames.filter((g) => g.knightsScore! < g.opponentScore!).length
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-knights-navy">Schedule & Results</h1>
-          <p className="text-gray-500 mt-1">2026 Spring Season</p>
+          <p className="text-gray-500 mt-1">2025-26 Spring Season · Mid-Suburban Conference</p>
         </div>
         <div className="bg-knights-navy text-white px-4 py-2 rounded-lg text-center">
           <div className="text-2xl font-bold">{wins}-{losses}</div>
@@ -67,15 +71,22 @@ function SchedulePage() {
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-medium">{game.time}</div>
-                  <span
-                    className={`inline-block mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${
-                      game.location === 'home'
-                        ? 'bg-knights-navy text-white'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {game.location === 'home' ? 'HOME' : 'AWAY'}
-                  </span>
+                  <div className="flex items-center gap-1 mt-1 justify-end">
+                    <span
+                      className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${
+                        game.location === 'home'
+                          ? 'bg-knights-navy text-white'
+                          : 'bg-gray-100 text-gray-600'
+                      }`}
+                    >
+                      {game.location === 'home' ? 'HOME' : 'AWAY'}
+                    </span>
+                    {game.isConference && (
+                      <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                        CONF
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -89,7 +100,9 @@ function SchedulePage() {
           <h2 className="text-xl font-bold text-knights-navy mb-4">Results</h2>
           <div className="space-y-3">
             {completedGames.map((game) => {
-              const isWin = game.knightsScore! > game.opponentScore!
+              const hasScore =
+                game.knightsScore !== null && game.opponentScore !== null
+              const isWin = hasScore && game.knightsScore! > game.opponentScore!
               return (
                 <Link
                   key={game.id}
@@ -119,20 +132,29 @@ function SchedulePage() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div
-                        className={`text-xl font-bold ${
-                          isWin ? 'text-green-600' : 'text-red-500'
-                        }`}
-                      >
-                        {game.knightsScore}-{game.opponentScore}
-                      </div>
-                      <div
-                        className={`text-xs font-semibold ${
-                          isWin ? 'text-green-600' : 'text-red-500'
-                        }`}
-                      >
-                        {isWin ? 'WIN' : 'LOSS'}
-                      </div>
+                      {hasScore ? (
+                        <>
+                          <div
+                            className={`text-xl font-bold ${
+                              isWin ? 'text-green-600' : 'text-red-500'
+                            }`}
+                          >
+                            {game.knightsScore}-{game.opponentScore}
+                            {game.overtime && (
+                              <span className="text-sm font-normal ml-1">(OT)</span>
+                            )}
+                          </div>
+                          <div
+                            className={`text-xs font-semibold ${
+                              isWin ? 'text-green-600' : 'text-red-500'
+                            }`}
+                          >
+                            {isWin ? 'WIN' : 'LOSS'}
+                          </div>
+                        </>
+                      ) : (
+                        <span className="text-xs text-gray-400 font-medium">Score N/R</span>
+                      )}
                     </div>
                   </div>
                 </Link>

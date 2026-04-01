@@ -1,31 +1,23 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { games } from '@/data/games'
-import { ArrowLeft, MapPin, Calendar, Clock, Trophy } from 'lucide-react'
+import { getSchedule } from '@/lib/schedule'
+import { ArrowLeft, MapPin, Calendar, Clock } from 'lucide-react'
 
 export const Route = createFileRoute('/games/$gameId')({
-  component: GameDetail,
   loader: async ({ params }) => {
+    const games = await getSchedule()
     const game = games.find((g) => g.id === +params.gameId)
-    if (!game) {
-      throw new Error('Game not found')
-    }
+    if (!game) throw new Error('Game not found')
     return game
   },
+  component: GameDetail,
 })
 
 function GameDetail() {
   const game = Route.useLoaderData()
 
-  const isWin =
-    game.status === 'final' &&
-    game.knightsScore !== null &&
-    game.opponentScore !== null &&
-    game.knightsScore > game.opponentScore
-  const isLoss =
-    game.status === 'final' &&
-    game.knightsScore !== null &&
-    game.opponentScore !== null &&
-    game.knightsScore < game.opponentScore
+  const hasScore = game.knightsScore !== null && game.opponentScore !== null
+  const isWin = hasScore && game.knightsScore! > game.opponentScore!
+  const isLoss = hasScore && game.knightsScore! < game.opponentScore!
 
   const date = new Date(game.date + 'T12:00:00')
   const formattedDate = date.toLocaleDateString('en-US', {
@@ -45,15 +37,23 @@ function GameDetail() {
         Back to Schedule
       </Link>
 
-      {/* Game Header */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <div className="bg-knights-navy text-white p-6">
           <div className="flex items-center gap-2 text-knights-gold text-sm mb-4">
             <Calendar className="w-4 h-4" />
             <span>{formattedDate}</span>
-            <span className="mx-1">·</span>
-            <Clock className="w-4 h-4" />
-            <span>{game.time}</span>
+            {game.time !== 'TBD' && game.time !== 'Final' && (
+              <>
+                <span className="mx-1">·</span>
+                <Clock className="w-4 h-4" />
+                <span>{game.time}</span>
+              </>
+            )}
+            {game.isConference && (
+              <span className="ml-2 text-xs bg-knights-gold/30 text-knights-gold px-2 py-0.5 rounded-full">
+                Conference
+              </span>
+            )}
           </div>
 
           <div className="flex items-center justify-between">
@@ -66,16 +66,24 @@ function GameDetail() {
 
             {game.status === 'final' ? (
               <div className="text-center px-8">
-                <div className="text-4xl font-bold">
-                  {game.knightsScore} - {game.opponentScore}
-                </div>
-                <div
-                  className={`text-sm font-semibold mt-1 ${
-                    isWin ? 'text-green-400' : isLoss ? 'text-red-400' : ''
-                  }`}
-                >
-                  {isWin ? 'WIN' : isLoss ? 'LOSS' : 'TIE'} — FINAL
-                </div>
+                {hasScore ? (
+                  <>
+                    <div className="text-4xl font-bold">
+                      {game.knightsScore} - {game.opponentScore}
+                    </div>
+                    <div
+                      className={`text-sm font-semibold mt-1 ${
+                        isWin ? 'text-green-400' : isLoss ? 'text-red-400' : 'text-gray-400'
+                      }`}
+                    >
+                      {isWin ? 'WIN' : isLoss ? 'LOSS' : 'TIE'}
+                      {game.overtime && ' (OT)'}
+                      {' — FINAL'}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-lg font-semibold text-gray-300">Score not reported</div>
+                )}
               </div>
             ) : (
               <div className="text-center px-8">
@@ -94,7 +102,6 @@ function GameDetail() {
         </div>
 
         <div className="p-6 space-y-4">
-          {/* Venue */}
           <div className="flex items-center gap-3 text-gray-600">
             <MapPin className="w-5 h-5 text-knights-gold" />
             <div>
@@ -105,23 +112,17 @@ function GameDetail() {
             </div>
           </div>
 
-          {/* Highlights */}
-          {game.highlights && (
-            <div className="border-t pt-4 mt-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Trophy className="w-5 h-5 text-knights-gold" />
-                <h3 className="font-bold text-knights-navy">Game Highlights</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">{game.highlights}</p>
-            </div>
-          )}
-
-          {/* Status badge for upcoming */}
           {game.status === 'upcoming' && (
             <div className="border-t pt-4 mt-4 text-center">
               <span className="inline-block bg-knights-gold text-knights-navy px-4 py-2 rounded-full font-bold text-sm">
                 Game Day: {formattedDate} at {game.time}
               </span>
+            </div>
+          )}
+
+          {game.status === 'final' && !hasScore && (
+            <div className="border-t pt-4 mt-4 text-center text-sm text-gray-400">
+              Score has not been reported on MaxPreps yet.
             </div>
           )}
         </div>

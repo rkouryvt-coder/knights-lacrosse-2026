@@ -1,12 +1,15 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
-import { games, roster } from '@/data/games'
-import { Shield, Calendar, Trophy, TrendingUp, MapPin } from 'lucide-react'
+import { getSchedule } from '@/lib/schedule'
+import { Shield, Calendar, Trophy, MapPin } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
+  loader: () => getSchedule(),
   component: HomePage,
 })
 
 function HomePage() {
+  const games = Route.useLoaderData()
+
   const completedGames = games
     .filter((g) => g.status === 'final')
     .sort((a, b) => b.date.localeCompare(a.date))
@@ -14,22 +17,16 @@ function HomePage() {
     .filter((g) => g.status === 'upcoming')
     .sort((a, b) => a.date.localeCompare(b.date))
 
-  const wins = completedGames.filter(
-    (g) => g.knightsScore !== null && g.opponentScore !== null && g.knightsScore > g.opponentScore,
-  ).length
-  const losses = completedGames.filter(
-    (g) => g.knightsScore !== null && g.opponentScore !== null && g.knightsScore < g.opponentScore,
-  ).length
-
-  const totalGoalsFor = completedGames.reduce((sum, g) => sum + (g.knightsScore ?? 0), 0)
-  const totalGoalsAgainst = completedGames.reduce((sum, g) => sum + (g.opponentScore ?? 0), 0)
-
-  const topScorers = [...roster]
-    .sort((a, b) => b.goals + b.assists - (a.goals + a.assists))
-    .slice(0, 5)
+  const scoredGames = completedGames.filter(
+    (g) => g.knightsScore !== null && g.opponentScore !== null,
+  )
+  const wins = scoredGames.filter((g) => g.knightsScore! > g.opponentScore!).length
+  const losses = scoredGames.filter((g) => g.knightsScore! < g.opponentScore!).length
+  const totalGoalsFor = scoredGames.reduce((sum, g) => sum + (g.knightsScore ?? 0), 0)
+  const totalGoalsAgainst = scoredGames.reduce((sum, g) => sum + (g.opponentScore ?? 0), 0)
 
   const nextGame = upcomingGames[0]
-  const lastGame = completedGames[0]
+  const lastScoredGame = scoredGames[0]
 
   return (
     <div>
@@ -39,7 +36,7 @@ function HomePage() {
           <Shield className="w-16 h-16 text-knights-gold mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
           <p className="text-knights-gold text-lg tracking-wider uppercase mb-6">
-            High School Lacrosse
+            High School Lacrosse · 2025-26
           </p>
           <div className="flex items-center justify-center gap-8">
             <div>
@@ -71,7 +68,7 @@ function HomePage() {
               </div>
               <div className="space-y-2">
                 <div className="text-2xl font-bold text-knights-navy">
-                  vs {nextGame.opponent}
+                  {nextGame.location === 'home' ? 'vs' : '@'} {nextGame.opponent}
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="w-4 h-4" />
@@ -82,15 +79,20 @@ function HomePage() {
                 <div className="text-gray-600">
                   {formatDate(nextGame.date)} at {nextGame.time}
                 </div>
+                {nextGame.isConference && (
+                  <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                    Conference Game
+                  </span>
+                )}
               </div>
             </div>
           )}
 
           {/* Last Result */}
-          {lastGame && (
+          {lastScoredGame && (
             <Link
               to="/games/$gameId"
-              params={{ gameId: lastGame.id.toString() }}
+              params={{ gameId: lastScoredGame.id.toString() }}
               className="block"
             >
               <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-knights-navy hover:shadow-lg transition-shadow">
@@ -101,30 +103,35 @@ function HomePage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-sm text-gray-500 uppercase">
-                      {lastGame.location === 'home' ? 'Home' : 'Away'} vs
+                      {lastScoredGame.location === 'home' ? 'Home' : 'Away'} vs
                     </div>
                     <div className="text-xl font-bold text-knights-navy">
-                      {lastGame.opponent}
+                      {lastScoredGame.opponent}
                     </div>
                   </div>
                   <div className="text-right">
                     <div
                       className={`text-3xl font-bold ${
-                        lastGame.knightsScore! > lastGame.opponentScore!
+                        lastScoredGame.knightsScore! > lastScoredGame.opponentScore!
                           ? 'text-green-600'
                           : 'text-red-500'
                       }`}
                     >
-                      {lastGame.knightsScore} - {lastGame.opponentScore}
+                      {lastScoredGame.knightsScore} - {lastScoredGame.opponentScore}
+                      {lastScoredGame.overtime && (
+                        <span className="text-base font-normal ml-1">(OT)</span>
+                      )}
                     </div>
                     <div
                       className={`text-sm font-semibold ${
-                        lastGame.knightsScore! > lastGame.opponentScore!
+                        lastScoredGame.knightsScore! > lastScoredGame.opponentScore!
                           ? 'text-green-600'
                           : 'text-red-500'
                       }`}
                     >
-                      {lastGame.knightsScore! > lastGame.opponentScore! ? 'WIN' : 'LOSS'}
+                      {lastScoredGame.knightsScore! > lastScoredGame.opponentScore!
+                        ? 'WIN'
+                        : 'LOSS'}
                     </div>
                   </div>
                 </div>
@@ -133,10 +140,9 @@ function HomePage() {
           )}
         </div>
 
-        {/* Recent Results and Top Players side by side */}
-        <div className="grid md:grid-cols-2 gap-8 mt-8">
-          {/* Recent Results */}
-          <div className="bg-white rounded-xl shadow-md p-6">
+        {/* Recent Results */}
+        {scoredGames.length > 0 && (
+          <div className="bg-white rounded-xl shadow-md p-6 mt-8">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-knights-navy">Recent Results</h2>
               <Link
@@ -147,7 +153,7 @@ function HomePage() {
               </Link>
             </div>
             <div className="space-y-3">
-              {completedGames.slice(0, 4).map((game) => (
+              {scoredGames.slice(0, 4).map((game) => (
                 <Link
                   key={game.id}
                   to="/games/$gameId"
@@ -178,59 +184,26 @@ function HomePage() {
                       }`}
                     >
                       {game.knightsScore}-{game.opponentScore}
+                      {game.overtime && <span className="font-normal text-xs ml-0.5">(OT)</span>}
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
-
-          {/* Top Players */}
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-knights-navy">Top Players</h2>
-              <Link
-                to="/roster"
-                className="text-sm text-knights-gold hover:text-knights-gold-light font-medium"
-              >
-                Full Roster →
-              </Link>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-center text-xs text-gray-500 font-medium px-3">
-                <div className="flex-1">Player</div>
-                <div className="w-12 text-center">G</div>
-                <div className="w-12 text-center">A</div>
-                <div className="w-12 text-center">PTS</div>
-              </div>
-              {topScorers.map((player) => (
-                <div
-                  key={player.id}
-                  className="flex items-center py-2 px-3 rounded-lg hover:bg-gray-50"
-                >
-                  <div className="flex-1">
-                    <span className="text-knights-gold font-bold text-sm mr-2">
-                      #{player.number}
-                    </span>
-                    <span className="font-medium text-sm">{player.name}</span>
-                  </div>
-                  <div className="w-12 text-center text-sm">{player.goals}</div>
-                  <div className="w-12 text-center text-sm">{player.assists}</div>
-                  <div className="w-12 text-center text-sm font-bold">
-                    {player.goals + player.assists}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Upcoming Games */}
         {upcomingGames.length > 0 && (
           <div className="bg-white rounded-xl shadow-md p-6 mt-8">
-            <div className="flex items-center gap-2 mb-4">
-              <TrendingUp className="w-5 h-5 text-knights-navy" />
+            <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-knights-navy">Upcoming Games</h2>
+              <Link
+                to="/schedule"
+                className="text-sm text-knights-gold hover:text-knights-gold-light font-medium"
+              >
+                Full Schedule →
+              </Link>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {upcomingGames.slice(0, 3).map((game) => (
@@ -242,16 +215,23 @@ function HomePage() {
                   <div className="font-bold text-knights-navy">
                     {game.location === 'home' ? 'vs' : '@'} {game.opponent}
                   </div>
-                  <div className="text-sm text-gray-600 mt-1">{game.time} — {game.venue}</div>
-                  <span
-                    className={`inline-block mt-2 text-xs px-2 py-1 rounded-full font-medium ${
-                      game.location === 'home'
-                        ? 'bg-knights-navy text-white'
-                        : 'bg-gray-100 text-gray-700'
-                    }`}
-                  >
-                    {game.location === 'home' ? 'HOME' : 'AWAY'}
-                  </span>
+                  <div className="text-sm text-gray-600 mt-1">{game.time}</div>
+                  <div className="flex items-center gap-1 mt-2">
+                    <span
+                      className={`inline-block text-xs px-2 py-1 rounded-full font-medium ${
+                        game.location === 'home'
+                          ? 'bg-knights-navy text-white'
+                          : 'bg-gray-100 text-gray-700'
+                      }`}
+                    >
+                      {game.location === 'home' ? 'HOME' : 'AWAY'}
+                    </span>
+                    {game.isConference && (
+                      <span className="inline-block text-xs px-2 py-1 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                        CONF
+                      </span>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
