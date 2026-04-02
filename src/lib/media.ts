@@ -82,7 +82,11 @@ async function fetchProspector(): Promise<MediaItem[]> {
           source: 'Prospector Now',
         }
       })
-      .filter((a) => a.title && a.url && a.title.toLowerCase().includes('lacrosse'))
+      .filter((a) => {
+        if (!a.title || !a.url) return false
+        const t = a.title.toLowerCase()
+        return t.includes('lacrosse') && !t.includes('girls') && !t.includes("women's")
+      })
   } catch {
     return []
   }
