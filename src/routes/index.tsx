@@ -1,14 +1,18 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
-import { Shield, Calendar, Trophy, MapPin } from 'lucide-react'
+import { getMediaFeed } from '@/lib/media'
+import { Shield, Calendar, Trophy, MapPin, Youtube, Newspaper } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
-  loader: () => getSchedule(),
+  loader: async () => {
+    const [games, media] = await Promise.all([getSchedule(), getMediaFeed()])
+    return { games, media }
+  },
   component: HomePage,
 })
 
 function HomePage() {
-  const games = Route.useLoaderData()
+  const { games, media } = Route.useLoaderData()
 
   const completedGames = games
     .filter((g) => g.status === 'final')
@@ -233,6 +237,56 @@ function HomePage() {
                     )}
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* News & Videos */}
+        {media.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-bold text-knights-navy mb-4">News &amp; Videos</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {media.slice(0, 6).map((item, i) => (
+                <a
+                  key={i}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow overflow-hidden flex flex-col"
+                >
+                  {item.thumbnail ? (
+                    <img
+                      src={item.thumbnail}
+                      alt={item.title}
+                      className="w-full h-40 object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-40 bg-knights-navy/10 flex items-center justify-center">
+                      {item.type === 'video'
+                        ? <Youtube className="w-10 h-10 text-knights-navy/30" />
+                        : <Newspaper className="w-10 h-10 text-knights-navy/30" />
+                      }
+                    </div>
+                  )}
+                  <div className="p-4 flex flex-col flex-1">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      {item.type === 'video'
+                        ? <Youtube className="w-3.5 h-3.5 text-red-600" />
+                        : <Newspaper className="w-3.5 h-3.5 text-knights-navy" />
+                      }
+                      <span className="text-xs font-medium text-gray-500">{item.source}</span>
+                      {item.date && (
+                        <span className="text-xs text-gray-400 ml-auto">
+                          {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm font-semibold text-knights-navy leading-snug line-clamp-3">
+                      {item.title}
+                    </p>
+                  </div>
+                </a>
               ))}
             </div>
           </div>
