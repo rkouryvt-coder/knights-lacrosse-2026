@@ -63,9 +63,14 @@ function SchedulePage() {
                     <div className="font-bold text-knights-navy">
                       {game.location === 'home' ? 'vs' : '@'} {game.opponent}
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
-                      <MapPin className="w-3 h-3" />
-                      {game.venue}
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex items-center gap-1 text-sm text-gray-500">
+                        <MapPin className="w-3 h-3" />
+                        {game.venue}
+                      </div>
+                      {game.opponentRecord && (
+                        <span className="text-xs text-gray-400 font-medium">({game.opponentRecord})</span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -125,9 +130,14 @@ function SchedulePage() {
                         <div className="font-bold text-knights-navy">
                           {game.location === 'home' ? 'vs' : '@'} {game.opponent}
                         </div>
-                        <div className="flex items-center gap-1 text-sm text-gray-500 mt-1">
-                          <MapPin className="w-3 h-3" />
-                          {game.venue}
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center gap-1 text-sm text-gray-500">
+                            <MapPin className="w-3 h-3" />
+                            {game.venue}
+                          </div>
+                          {game.opponentRecord && (
+                            <span className="text-xs text-gray-400 font-medium">({game.opponentRecord})</span>
+                          )}
                         </div>
                       </div>
                     </div>

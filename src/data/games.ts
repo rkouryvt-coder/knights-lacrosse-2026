@@ -10,6 +10,7 @@ export interface Game {
   status: 'upcoming' | 'final'
   overtime?: boolean
   isConference?: boolean
+  opponentRecord?: string
 }
 
 // Real 2025-26 Prospect Knights Boys Varsity Lacrosse schedule.
@@ -25,6 +26,7 @@ export const games: Array<Game> = [
     knightsScore: 15,
     opponentScore: 2,
     status: 'final',
+    opponentRecord: '1-3',
   },
   {
     id: 2,
@@ -37,6 +39,7 @@ export const games: Array<Game> = [
     opponentScore: 7,
     status: 'final',
     overtime: true,
+    opponentRecord: '3-1',
   },
   {
     id: 3,
@@ -48,6 +51,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '0-0',
   },
   {
     id: 4,
@@ -59,6 +63,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '2-3',
   },
   {
     id: 5,
@@ -70,6 +75,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '2-2',
   },
   {
     id: 6,
@@ -81,6 +87,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '0-1',
   },
   {
     id: 7,
@@ -92,6 +99,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '0-1',
   },
   {
     id: 8,
@@ -103,6 +111,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '2-0',
   },
   {
     id: 9,
@@ -114,5 +123,6 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
+    opponentRecord: '0-1',
   },
 ]
