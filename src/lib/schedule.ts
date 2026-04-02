@@ -38,10 +38,11 @@ function parseRschoolHtml(
       const a = parseInt(scoreMatch[2], 10)
       const b = parseInt(scoreMatch[3], 10)
 
+      // rschoolteams shows winner's score first.
       // "W 12-8" → Knights won, knights=12 opp=8
-      // "L 5-10" → Knights lost, knights=5 opp=10
-      const knightsScore = wl === 'W' ? a : a
-      const opponentScore = wl === 'W' ? b : b
+      // "L 5-10" → Knights lost, opp=5 knights=10... use W/L to assign correctly
+      const knightsScore = wl === 'W' ? Math.max(a, b) : Math.min(a, b)
+      const opponentScore = wl === 'W' ? Math.min(a, b) : Math.max(a, b)
 
       // Match opponent name against our static schedule
       const rowText = stripTags(rowHtml).toLowerCase()
