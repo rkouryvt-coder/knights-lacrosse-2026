@@ -5,6 +5,7 @@ export interface Game {
   opponent: string
   location: 'home' | 'away'
   venue: string
+  coords?: { lat: number; lng: number }
   knightsScore: number | null
   opponentScore: number | null
   status: 'upcoming' | 'final'
@@ -24,6 +25,7 @@ export const games: Array<Game> = [
     opponent: 'Stevenson',
     location: 'home',
     venue: 'Prospect High School',
+    coords: { lat: 42.0703, lng: -87.9406 },
     knightsScore: 15,
     opponentScore: 2,
     status: 'final',
@@ -36,6 +38,7 @@ export const games: Array<Game> = [
     opponent: 'Maine South',
     location: 'home',
     venue: 'Prospect High School',
+    coords: { lat: 42.0703, lng: -87.9406 },
     knightsScore: 6,
     opponentScore: 7,
     status: 'final',
@@ -49,6 +52,7 @@ export const games: Array<Game> = [
     opponent: 'Wheeling',
     location: 'away',
     venue: 'Wheeling High School',
+    coords: { lat: 42.1288, lng: -87.9223 },
     knightsScore: 19,
     opponentScore: 0,
     status: 'final',
@@ -61,6 +65,7 @@ export const games: Array<Game> = [
     opponent: 'Libertyville',
     location: 'away',
     venue: 'Libertyville High School',
+    coords: { lat: 42.2813, lng: -87.9538 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
@@ -73,6 +78,7 @@ export const games: Array<Game> = [
     opponent: 'Notre Dame',
     location: 'home',
     venue: 'Prospect High School',
+    coords: { lat: 42.0703, lng: -87.9406 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
@@ -85,6 +91,7 @@ export const games: Array<Game> = [
     opponent: 'Fremd',
     location: 'away',
     venue: 'Fremd High School',
+    coords: { lat: 42.1055, lng: -88.0516 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
@@ -97,6 +104,7 @@ export const games: Array<Game> = [
     opponent: 'Rolling Meadows',
     location: 'away',
     venue: 'Rolling Meadows High School',
+    coords: { lat: 42.0661, lng: -88.0207 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
@@ -109,6 +117,7 @@ export const games: Array<Game> = [
     opponent: 'Hersey',
     location: 'home',
     venue: 'Prospect High School',
+    coords: { lat: 42.0703, lng: -87.9406 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
@@ -121,6 +130,7 @@ export const games: Array<Game> = [
     opponent: 'Deerfield',
     location: 'away',
     venue: 'Deerfield High School',
+    coords: { lat: 42.1730, lng: -87.8453 },
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',

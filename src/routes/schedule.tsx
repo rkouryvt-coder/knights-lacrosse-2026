@@ -77,7 +77,16 @@ function SchedulePage() {
                       <div className="flex items-center gap-2 mt-1">
                         <div className="flex items-center gap-1 text-sm text-gray-500">
                           <MapPin className="w-3 h-3" />
-                          {game.venue}
+                          {game.coords ? (
+                            <a
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(game.venue + ', IL')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-knights-blue hover:underline"
+                            >
+                              {game.venue}
+                            </a>
+                          ) : game.venue}
                         </div>
                         {game.opponentRecord && (
                           <span className="text-xs text-gray-400 font-medium">({game.opponentRecord})</span>
@@ -166,7 +175,17 @@ function SchedulePage() {
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex items-center gap-1 text-sm text-gray-500">
                             <MapPin className="w-3 h-3" />
-                            {game.venue}
+                            {game.coords ? (
+                              <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(game.venue + ', IL')}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:text-knights-blue hover:underline"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {game.venue}
+                              </a>
+                            ) : game.venue}
                           </div>
                           {game.opponentRecord && (
                             <span className="text-xs text-gray-400 font-medium">({game.opponentRecord})</span>

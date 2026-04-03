@@ -1,19 +1,30 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
 import { getMediaFeed } from '@/lib/media'
+import { getGameWeather } from '@/lib/weather'
+import type { GameWeather } from '@/lib/weather'
 import { scoringStats } from '@/data/stats'
-import { Calendar, Trophy, MapPin, Youtube, Newspaper, Flame, Users } from 'lucide-react'
+import { Calendar, Trophy, MapPin, Youtube, Newspaper, Flame, Users, Instagram } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
     const [games, media] = await Promise.all([getSchedule(), getMediaFeed()])
-    return { games, media }
+    const nextGame = games
+      .filter((g) => g.status === 'upcoming')
+      .sort((a, b) => a.date.localeCompare(b.date))[0]
+    let weather: GameWeather | null = null
+    if (nextGame?.coords) {
+      weather = await getGameWeather({
+        data: { lat: nextGame.coords.lat, lng: nextGame.coords.lng, date: nextGame.date, time: nextGame.time },
+      })
+    }
+    return { games, media, weather }
   },
   component: HomePage,
 })
 
 function HomePage() {
-  const { games, media } = Route.useLoaderData()
+  const { games, media, weather } = Route.useLoaderData()
 
   const completedGames = games
     .filter((g) => g.status === 'final')
@@ -103,6 +114,15 @@ function HomePage() {
             >
               Meet the Team
             </Link>
+            <a
+              href="https://www.instagram.com/phsknightslax/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 border border-white/30 text-white rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
@@ -133,9 +153,22 @@ function HomePage() {
           {/* Next Game */}
           {nextGame && (
             <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-knights-blue">
-              <div className="flex items-center gap-2 mb-4">
-                <Calendar className="w-5 h-5 text-knights-blue" />
-                <h2 className="text-lg font-bold text-knights-navy">Next Game</h2>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-5 h-5 text-knights-blue" />
+                  <h2 className="text-lg font-bold text-knights-navy">Next Game</h2>
+                </div>
+                {weather && (
+                  <div className="flex items-center gap-1.5 text-sm text-gray-600 bg-gray-50 px-3 py-1 rounded-full">
+                    <span className="text-base">{weather.emoji}</span>
+                    <span className="font-semibold">{weather.tempF}°F</span>
+                    <span className="text-gray-400">·</span>
+                    <span>{weather.condition}</span>
+                    {weather.rainChance > 20 && (
+                      <span className="text-blue-500 text-xs">· {weather.rainChance}% rain</span>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="space-y-2">
                 <div className="text-2xl font-bold text-knights-navy">
@@ -143,9 +176,18 @@ function HomePage() {
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="w-4 h-4" />
-                  <span>
-                    {nextGame.location === 'home' ? 'HOME' : 'AWAY'} — {nextGame.venue}
-                  </span>
+                  {nextGame.coords ? (
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(nextGame.venue + ', IL')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-knights-blue hover:underline"
+                    >
+                      {nextGame.location === 'home' ? 'HOME' : 'AWAY'} — {nextGame.venue}
+                    </a>
+                  ) : (
+                    <span>{nextGame.location === 'home' ? 'HOME' : 'AWAY'} — {nextGame.venue}</span>
+                  )}
                 </div>
                 <div className="text-gray-600">
                   {formatDate(nextGame.date)} at {nextGame.time}

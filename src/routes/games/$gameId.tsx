@@ -1,19 +1,27 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
-import { ArrowLeft, MapPin, Calendar, Clock } from 'lucide-react'
+import { getGameWeather } from '@/lib/weather'
+import type { GameWeather } from '@/lib/weather'
+import { ArrowLeft, MapPin, Calendar, Clock, Navigation } from 'lucide-react'
 
 export const Route = createFileRoute('/games/$gameId')({
   loader: async ({ params }) => {
     const games = await getSchedule()
     const game = games.find((g) => g.id === +params.gameId)
     if (!game) throw new Error('Game not found')
-    return game
+    let weather: GameWeather | null = null
+    if (game.status === 'upcoming' && game.coords) {
+      weather = await getGameWeather({
+        data: { lat: game.coords.lat, lng: game.coords.lng, date: game.date, time: game.time },
+      })
+    }
+    return { game, weather }
   },
   component: GameDetail,
 })
 
 function GameDetail() {
-  const game = Route.useLoaderData()
+  const { game, weather } = Route.useLoaderData()
 
   const hasScore = game.knightsScore !== null && game.opponentScore !== null
   const isWin = hasScore && game.knightsScore! > game.opponentScore!
@@ -102,15 +110,40 @@ function GameDetail() {
         </div>
 
         <div className="p-6 space-y-4">
-          <div className="flex items-center gap-3 text-gray-600">
-            <MapPin className="w-5 h-5 text-knights-blue" />
-            <div>
-              <div className="font-medium">{game.venue}</div>
-              <div className="text-sm text-gray-400">
-                {game.location === 'home' ? 'Home Game' : 'Away Game'}
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3 text-gray-600">
+              <MapPin className="w-5 h-5 text-knights-blue shrink-0" />
+              <div>
+                <div className="font-medium">{game.venue}</div>
+                <div className="text-sm text-gray-400">
+                  {game.location === 'home' ? 'Home Game' : 'Away Game'}
+                </div>
               </div>
             </div>
+            {game.coords && (
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(game.venue + ', IL')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-sm text-knights-blue font-medium hover:underline shrink-0"
+              >
+                <Navigation className="w-4 h-4" />
+                Get Directions
+              </a>
+            )}
           </div>
+
+          {weather && game.status === 'upcoming' && (
+            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <span className="text-2xl">{weather.emoji}</span>
+              <div>
+                <div className="font-semibold text-gray-800">{weather.tempF}°F — {weather.condition}</div>
+                {weather.rainChance > 20 && (
+                  <div className="text-sm text-blue-500">{weather.rainChance}% chance of rain — bring a layer</div>
+                )}
+              </div>
+            </div>
+          )}
 
           {game.status === 'upcoming' && (
             <div className="border-t pt-4 mt-4 text-center">
