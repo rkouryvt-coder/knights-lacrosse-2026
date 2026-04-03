@@ -96,11 +96,23 @@ function HomePage() {
             </div>
           </div>
           {winStreak >= 2 && (
-            <div className="flex items-center justify-center gap-1.5 mb-6">
+            <div className="flex items-center justify-center gap-1.5 mb-3">
               <Flame className="w-4 h-4 text-orange-400" />
               <span className="text-orange-400 text-sm font-semibold">{winStreak}-game win streak</span>
             </div>
           )}
+          <div className="max-w-xs mx-auto w-full mb-6 px-4">
+            <div className="flex justify-between text-xs text-gray-400 mb-1">
+              <span>{scoredGames.length} of {games.length} games played</span>
+              <span>{games.length - scoredGames.length} remaining</span>
+            </div>
+            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-knights-blue rounded-full transition-all"
+                style={{ width: `${(scoredGames.length / games.length) * 100}%` }}
+              />
+            </div>
+          </div>
           <div className={`flex items-center justify-center gap-4 ${winStreak >= 2 ? '' : 'mt-6'}`}>
             <Link
               to="/schedule"
@@ -171,8 +183,13 @@ function HomePage() {
                 )}
               </div>
               <div className="space-y-2">
-                <div className="text-2xl font-bold text-knights-navy">
-                  {nextGame.location === 'home' ? 'vs' : '@'} {nextGame.opponent}
+                <div className="flex items-baseline gap-2">
+                  <div className="text-2xl font-bold text-knights-navy">
+                    {nextGame.location === 'home' ? 'vs' : '@'} {nextGame.opponent}
+                  </div>
+                  {nextGame.opponentRecord && (
+                    <span className="text-sm text-gray-400 font-medium">({nextGame.opponentRecord})</span>
+                  )}
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <MapPin className="w-4 h-4" />
