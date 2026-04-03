@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
-import { Calendar, MapPin, CalendarPlus } from 'lucide-react'
+import { Calendar, MapPin, CalendarPlus, Video } from 'lucide-react'
 
 export const Route = createFileRoute('/schedule')({
   loader: () => getSchedule(),
@@ -112,6 +112,18 @@ function SchedulePage() {
                       <CalendarPlus className="w-3 h-3" />
                       Add to Calendar
                     </a>
+                    {game.hudlUrl && (
+                      <a
+                        href={game.hudlUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-xs text-orange-500 font-semibold hover:underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Video className="w-3 h-3" />
+                        Watch Live
+                      </a>
+                    )}
                   </div>
                 </div>
               )
@@ -162,7 +174,7 @@ function SchedulePage() {
                         </div>
                       </div>
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex flex-col items-end gap-1">
                       {hasScore ? (
                         <>
                           <div
@@ -185,6 +197,18 @@ function SchedulePage() {
                         </>
                       ) : (
                         <span className="text-xs text-gray-400 font-medium">Score N/R</span>
+                      )}
+                      {game.hudlUrl && (
+                        <a
+                          href={game.hudlUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 text-xs text-knights-blue hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <Video className="w-3 h-3" />
+                          Watch Replay
+                        </a>
                       )}
                     </div>
                   </div>

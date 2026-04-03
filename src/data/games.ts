@@ -11,6 +11,7 @@ export interface Game {
   overtime?: boolean
   isConference?: boolean
   opponentRecord?: string
+  hudlUrl?: string  // Hudl live stream or replay URL — add before each game
 }
 
 // Real 2025-26 Prospect Knights Boys Varsity Lacrosse schedule.

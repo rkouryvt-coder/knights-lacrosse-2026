@@ -342,7 +342,29 @@ function HomePage() {
           <div className="mt-8">
             <h2 className="text-lg font-bold text-knights-navy mb-4">News &amp; Videos</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {media.slice(0, 6).map((item, i) => (
+              {/* Hudl card */}
+              <a
+                href="https://fan.hudl.com/usa/il/mt-prospect/organization/4523/prospect-high-school/team/578919/boys-varsity-lacrosse/video"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white rounded-xl shadow-sm border hover:shadow-md transition-shadow overflow-hidden flex flex-col"
+              >
+                <div className="w-full h-40 bg-knights-navy flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-white text-3xl font-black tracking-tight leading-none">HUDL</div>
+                    <div className="text-knights-blue text-xs mt-1 font-medium uppercase tracking-widest">Game Film & Highlights</div>
+                  </div>
+                </div>
+                <div className="p-4 flex flex-col flex-1">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="text-xs font-medium text-gray-500">Hudl</span>
+                  </div>
+                  <p className="text-sm font-semibold text-knights-navy leading-snug">
+                    Watch game film, highlights, and live streams for the Prospect Knights
+                  </p>
+                </div>
+              </a>
+              {media.slice(0, 5).map((item, i) => (
                 <a
                   key={i}
                   href={item.url}
