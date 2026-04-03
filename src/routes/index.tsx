@@ -37,7 +37,7 @@ function HomePage() {
       {/* Hero — stays fixed */}
       <div className="bg-knights-navy text-white py-12 px-4 shrink-0">
         <div className="max-w-6xl mx-auto text-center">
-          <img src="/knights-logo.png" alt="Prospect Knights" className="w-20 h-20 object-contain mx-auto mb-4" />
+          <img src="/knights-logo.jpg" alt="Prospect Knights" className="w-20 h-20 object-contain mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
           <p className="text-knights-blue text-lg tracking-wider uppercase mb-6">
             High School Lacrosse · 2025-26
