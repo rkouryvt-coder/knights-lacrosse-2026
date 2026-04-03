@@ -78,6 +78,55 @@ function RootLayout() {
       <main className="flex-1 overflow-hidden">
         <Outlet />
       </main>
+      <footer className="bg-knights-navy text-white shrink-0">
+        <div className="max-w-6xl mx-auto px-4 py-5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <span className="font-semibold text-white">Prospect Knights Lacrosse</span>
+              <span>·</span>
+              <span>2025–26 Season</span>
+            </div>
+            <div className="flex items-center gap-5">
+              <a
+                href="https://www.instagram.com/phsknightslax/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors text-sm flex items-center gap-1.5"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://fan.hudl.com/usa/il/mt-prospect/organization/4523/prospect-high-school/team/578919/boys-varsity-lacrosse/video"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors text-sm"
+              >
+                Hudl
+              </a>
+              <a
+                href="https://www.maxpreps.com/il/mt-prospect/prospect-knights/lacrosse/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors text-sm"
+              >
+                MaxPreps
+              </a>
+              <Link
+                to="/schedule"
+                className="text-gray-400 hover:text-white transition-colors text-sm no-underline"
+              >
+                Schedule
+              </Link>
+              <Link
+                to="/roster"
+                className="text-gray-400 hover:text-white transition-colors text-sm no-underline"
+              >
+                Roster
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
