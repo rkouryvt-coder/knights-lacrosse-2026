@@ -38,8 +38,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 function RootLayout() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-knights-navy text-white shadow-lg">
+    <div className="h-screen flex flex-col bg-gray-50">
+      <header className="bg-knights-navy text-white shadow-lg shrink-0">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 no-underline text-white">
@@ -76,7 +76,7 @@ function RootLayout() {
           </div>
         </div>
       </header>
-      <main>
+      <main className="flex-1 overflow-hidden">
         <Outlet />
       </main>
     </div>

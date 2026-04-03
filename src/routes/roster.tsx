@@ -56,6 +56,7 @@ function RosterPage() {
   const statsByNumber = Object.fromEntries(scoringStats.map((s) => [s.number, s]))
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-knights-navy">Team Roster</h1>
@@ -205,6 +206,7 @@ function RosterPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   )
 }

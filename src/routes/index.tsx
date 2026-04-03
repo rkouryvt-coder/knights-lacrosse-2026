@@ -33,9 +33,9 @@ function HomePage() {
   const lastScoredGame = scoredGames[0]
 
   return (
-    <div>
-      {/* Hero */}
-      <div className="bg-knights-navy text-white py-12 px-4">
+    <div className="h-full flex flex-col overflow-hidden">
+      {/* Hero — stays fixed */}
+      <div className="bg-knights-navy text-white py-12 px-4 shrink-0">
         <div className="max-w-6xl mx-auto text-center">
           <Shield className="w-16 h-16 text-knights-gold mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
@@ -61,6 +61,7 @@ function HomePage() {
         </div>
       </div>
 
+      <div className="flex-1 overflow-y-auto">
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid md:grid-cols-2 gap-8">
           {/* Next Game */}
@@ -291,6 +292,7 @@ function HomePage() {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   )

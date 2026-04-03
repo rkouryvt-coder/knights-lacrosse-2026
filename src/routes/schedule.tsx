@@ -24,6 +24,7 @@ function SchedulePage() {
   const losses = scoredGames.filter((g) => g.knightsScore! < g.opponentScore!).length
 
   return (
+    <div className="h-full overflow-y-auto">
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
@@ -173,6 +174,7 @@ function SchedulePage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   )
 }
