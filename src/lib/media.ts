@@ -34,7 +34,7 @@ async function fetchYouTube(): Promise<MediaItem[]> {
     if (!res.ok) return []
     const xml = await res.text()
     return splitEntries(xml, 'entry')
-      .slice(0, 4)
+      .slice(0, 15)
       .map((entry) => {
         const videoId = parseXmlText(entry, 'yt:videoId')
         const title = parseXmlText(entry, 'title')
@@ -51,7 +51,11 @@ async function fetchYouTube(): Promise<MediaItem[]> {
           source: 'PHSKnightTV',
         }
       })
-      .filter((v) => v.title)
+      .filter((v) => {
+        if (!v.title) return false
+        const t = v.title.toLowerCase()
+        return t.includes('lacrosse') && !t.includes('girls') && !t.includes("women's")
+      })
   } catch {
     return []
   }
