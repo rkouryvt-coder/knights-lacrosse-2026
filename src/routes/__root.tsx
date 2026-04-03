@@ -42,7 +42,7 @@ function RootLayout() {
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 no-underline text-white">
-              <img src="/knights-logo.jpg" alt="Prospect Knights" className="w-10 h-10 object-contain" />
+              <img src="/knights-logo.png" alt="Prospect Knights" className="w-10 h-10 object-cover rounded-full" />
               <div>
                 <h1 className="text-xl font-bold leading-tight">Prospect Knights</h1>
                 <p className="text-xs text-knights-blue tracking-wider uppercase">Lacrosse</p>
