@@ -5,16 +5,21 @@ import '../styles.css'
 export const Route = createRootRoute({
   head: () => ({
     meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'Prospect Knights Lacrosse',
-      },
+      { charSet: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { title: 'Prospect Knights Lacrosse' },
+      { name: 'description', content: 'Prospect Knights Boys Varsity Lacrosse — 2025-26 season schedule, scores, roster, and stats.' },
+      // Open Graph
+      { property: 'og:type', content: 'website' },
+      { property: 'og:title', content: 'Prospect Knights Lacrosse' },
+      { property: 'og:description', content: 'Prospect Knights Boys Varsity Lacrosse — 2025-26 season schedule, scores, roster, and stats.' },
+      { property: 'og:image', content: 'https://www.prospectlax.com/knights-logo.png' },
+      { property: 'og:url', content: 'https://www.prospectlax.com' },
+      // Twitter/iMessage card
+      { name: 'twitter:card', content: 'summary' },
+      { name: 'twitter:title', content: 'Prospect Knights Lacrosse' },
+      { name: 'twitter:description', content: 'Prospect Knights Boys Varsity Lacrosse — 2025-26 season schedule, scores, roster, and stats.' },
+      { name: 'twitter:image', content: 'https://www.prospectlax.com/knights-logo.png' },
     ],
   }),
   component: RootLayout,
