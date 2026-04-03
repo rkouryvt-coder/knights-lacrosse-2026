@@ -48,15 +48,15 @@ function HomePage() {
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Hero — stays fixed */}
-      <div className="bg-knights-navy text-white py-12 px-4 shrink-0">
+      <div className="bg-knights-navy text-white py-6 px-4 shrink-0">
         <div className="max-w-6xl mx-auto text-center">
-          <img src="/knights-logo.png" alt="Prospect Knights" className="w-24 h-24 object-cover rounded-full mx-auto mb-4" />
-          <div className="text-xs text-gray-400 uppercase tracking-widest mb-2">2025–26 Season</div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
-          <p className="text-knights-blue text-lg mb-6 italic">
+          <img src="/knights-logo.png" alt="Prospect Knights" className="w-16 h-16 object-cover rounded-full mx-auto mb-2" />
+          <div className="text-xs text-gray-400 uppercase tracking-widest mb-1">2025–26 Season</div>
+          <h1 className="text-3xl md:text-4xl font-bold mb-1">Prospect Knights</h1>
+          <p className="text-knights-blue text-base mb-4 italic">
             Where your athlete becomes a player.
           </p>
-          <div className="flex items-center justify-center gap-8 mb-4">
+          <div className="flex items-center justify-center gap-8 mb-3">
             <div>
               <div className="text-3xl font-bold">{wins}-{losses}</div>
               <div className="text-sm text-gray-300">
