@@ -116,13 +116,13 @@ function HomePage() {
           <div className={`flex items-center justify-center gap-4 ${winStreak >= 2 ? '' : 'mt-6'}`}>
             <Link
               to="/schedule"
-              className="px-5 py-2 bg-knights-blue text-knights-navy font-semibold rounded-lg hover:opacity-90 transition-opacity text-sm"
+              className="px-5 py-2 bg-knights-blue text-knights-navy font-semibold rounded-lg hover:opacity-90 transition-opacity text-sm whitespace-nowrap"
             >
               View Schedule
             </Link>
             <Link
               to="/roster"
-              className="px-5 py-2 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors text-sm"
+              className="px-5 py-2 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors text-sm whitespace-nowrap"
             >
               Meet the Team
             </Link>

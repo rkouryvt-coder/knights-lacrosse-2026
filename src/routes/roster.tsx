@@ -67,17 +67,15 @@ function RosterPage() {
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-knights-navy">Team Roster</h1>
         <p className="text-gray-500 mt-1">2025-26 Spring Season · Head Coach: Tom Riesing</p>
-        <div className="flex flex-wrap gap-3 mt-3">
-          {gradeOrder.filter((g) => gradeCounts[g]).map((grade) => (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3">
+          {gradeOrder.filter((g) => gradeCounts[g]).map((grade, i, arr) => (
             <div key={grade} className="flex items-center gap-1.5 text-sm text-gray-600">
               <span className="font-semibold text-knights-navy">{gradeCounts[grade]}</span>
               <span>{grade === 'Sr.' ? 'Seniors' : grade === 'Jr.' ? 'Juniors' : grade === 'So.' ? 'Sophomores' : 'Freshmen'}</span>
+              {i < arr.length - 1 && <span className="text-gray-300">·</span>}
             </div>
           ))}
-          <div className="flex items-center gap-1.5 text-sm text-gray-400">
-            <span>·</span>
-            <span>{players.length} total</span>
-          </div>
+          <div className="text-sm text-gray-400">— {players.length} total</div>
         </div>
       </div>
 
