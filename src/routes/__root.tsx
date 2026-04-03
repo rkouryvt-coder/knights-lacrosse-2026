@@ -1,5 +1,4 @@
 import { HeadContent, Scripts, Outlet, Link, createRootRoute } from '@tanstack/react-router'
-import { Shield } from 'lucide-react'
 
 import '../styles.css'
 
@@ -43,32 +42,32 @@ function RootLayout() {
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3 no-underline text-white">
-              <Shield className="w-8 h-8 text-knights-gold" />
+              <img src="/knights-logo.png" alt="Prospect Knights" className="w-10 h-10 object-contain" />
               <div>
                 <h1 className="text-xl font-bold leading-tight">Prospect Knights</h1>
-                <p className="text-xs text-knights-gold tracking-wider uppercase">Lacrosse</p>
+                <p className="text-xs text-knights-blue tracking-wider uppercase">Lacrosse</p>
               </div>
             </Link>
             <nav className="flex items-center gap-6">
               <Link
                 to="/"
-                className="text-sm font-medium hover:text-knights-gold transition-colors no-underline text-white"
-                activeProps={{ className: 'text-sm font-medium text-knights-gold no-underline' }}
+                className="text-sm font-medium hover:text-knights-blue transition-colors no-underline text-white"
+                activeProps={{ className: 'text-sm font-medium text-knights-blue no-underline' }}
                 activeOptions={{ exact: true }}
               >
                 Home
               </Link>
               <Link
                 to="/schedule"
-                className="text-sm font-medium hover:text-knights-gold transition-colors no-underline text-white"
-                activeProps={{ className: 'text-sm font-medium text-knights-gold no-underline' }}
+                className="text-sm font-medium hover:text-knights-blue transition-colors no-underline text-white"
+                activeProps={{ className: 'text-sm font-medium text-knights-blue no-underline' }}
               >
                 Schedule
               </Link>
               <Link
                 to="/roster"
-                className="text-sm font-medium hover:text-knights-gold transition-colors no-underline text-white"
-                activeProps={{ className: 'text-sm font-medium text-knights-gold no-underline' }}
+                className="text-sm font-medium hover:text-knights-blue transition-colors no-underline text-white"
+                activeProps={{ className: 'text-sm font-medium text-knights-blue no-underline' }}
               >
                 Roster
               </Link>

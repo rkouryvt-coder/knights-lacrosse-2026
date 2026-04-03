@@ -1,7 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
 import { getMediaFeed } from '@/lib/media'
-import { Shield, Calendar, Trophy, MapPin, Youtube, Newspaper } from 'lucide-react'
+import { Calendar, Trophy, MapPin, Youtube, Newspaper } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
@@ -37,9 +37,9 @@ function HomePage() {
       {/* Hero — stays fixed */}
       <div className="bg-knights-navy text-white py-12 px-4 shrink-0">
         <div className="max-w-6xl mx-auto text-center">
-          <Shield className="w-16 h-16 text-knights-gold mx-auto mb-4" />
+          <img src="/knights-logo.png" alt="Prospect Knights" className="w-20 h-20 object-contain mx-auto mb-4" />
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
-          <p className="text-knights-gold text-lg tracking-wider uppercase mb-6">
+          <p className="text-knights-blue text-lg tracking-wider uppercase mb-6">
             High School Lacrosse · 2025-26
           </p>
           <div className="flex items-center justify-center gap-8">
@@ -66,9 +66,9 @@ function HomePage() {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Next Game */}
           {nextGame && (
-            <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-knights-gold">
+            <div className="bg-white rounded-xl shadow-md p-6 border-l-4 border-knights-blue">
               <div className="flex items-center gap-2 mb-4">
-                <Calendar className="w-5 h-5 text-knights-gold" />
+                <Calendar className="w-5 h-5 text-knights-blue" />
                 <h2 className="text-lg font-bold text-knights-navy">Next Game</h2>
               </div>
               <div className="space-y-2">
@@ -85,7 +85,7 @@ function HomePage() {
                   {formatDate(nextGame.date)} at {nextGame.time}
                 </div>
                 {nextGame.isConference && (
-                  <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                  <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-blue/20 text-knights-navy">
                     Conference Game
                   </span>
                 )}
@@ -152,7 +152,7 @@ function HomePage() {
               <h2 className="text-lg font-bold text-knights-navy">Recent Results</h2>
               <Link
                 to="/schedule"
-                className="text-sm text-knights-gold hover:text-knights-gold-light font-medium"
+                className="text-sm text-knights-blue hover:text-knights-blue-light font-medium"
               >
                 Full Schedule →
               </Link>
@@ -205,7 +205,7 @@ function HomePage() {
               <h2 className="text-lg font-bold text-knights-navy">Upcoming Games</h2>
               <Link
                 to="/schedule"
-                className="text-sm text-knights-gold hover:text-knights-gold-light font-medium"
+                className="text-sm text-knights-blue hover:text-knights-blue-light font-medium"
               >
                 Full Schedule →
               </Link>
@@ -214,7 +214,7 @@ function HomePage() {
               {upcomingGames.slice(0, 3).map((game) => (
                 <div
                   key={game.id}
-                  className="border rounded-lg p-4 hover:border-knights-gold transition-colors"
+                  className="border rounded-lg p-4 hover:border-knights-blue transition-colors"
                 >
                   <div className="text-sm text-gray-500 mb-1">{formatDate(game.date)}</div>
                   <div className="font-bold text-knights-navy">
@@ -232,7 +232,7 @@ function HomePage() {
                       {game.location === 'home' ? 'HOME' : 'AWAY'}
                     </span>
                     {game.isConference && (
-                      <span className="inline-block text-xs px-2 py-1 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                      <span className="inline-block text-xs px-2 py-1 rounded-full font-medium bg-knights-blue/20 text-knights-navy">
                         CONF
                       </span>
                     )}

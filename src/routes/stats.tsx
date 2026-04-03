@@ -39,7 +39,7 @@ function StatsPage() {
       {/* Scoring leaders */}
       <div className="bg-white rounded-xl shadow-md overflow-hidden mb-8">
         <div className="bg-knights-navy px-6 py-3 flex items-center gap-2">
-          <Trophy className="w-4 h-4 text-knights-gold" />
+          <Trophy className="w-4 h-4 text-knights-blue" />
           <span className="text-white font-semibold text-sm uppercase tracking-wider">
             Scoring Leaders
           </span>
@@ -118,7 +118,7 @@ function StatsPage() {
             href="https://www.dailyherald.com/sports/high-school-sports/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-knights-gold hover:underline"
+            className="text-knights-blue hover:underline"
           >
             Daily Herald
           </a>{' '}

@@ -33,7 +33,7 @@ function SchedulePage() {
         </div>
         <div className="bg-knights-navy text-white px-4 py-2 rounded-lg text-center">
           <div className="text-2xl font-bold">{wins}-{losses}</div>
-          <div className="text-xs text-knights-gold">Season Record</div>
+          <div className="text-xs text-knights-blue">Season Record</div>
         </div>
       </div>
 
@@ -41,7 +41,7 @@ function SchedulePage() {
       {upcomingGames.length > 0 && (
         <div className="mb-10">
           <div className="flex items-center gap-2 mb-4">
-            <Calendar className="w-5 h-5 text-knights-gold" />
+            <Calendar className="w-5 h-5 text-knights-blue" />
             <h2 className="text-xl font-bold text-knights-navy">Upcoming</h2>
           </div>
           <div className="space-y-3">
@@ -88,7 +88,7 @@ function SchedulePage() {
                       {game.location === 'home' ? 'HOME' : 'AWAY'}
                     </span>
                     {game.isConference && (
-                      <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-gold/20 text-knights-navy">
+                      <span className="inline-block text-xs px-2 py-0.5 rounded-full font-medium bg-knights-blue/20 text-knights-navy">
                         CONF
                       </span>
                     )}

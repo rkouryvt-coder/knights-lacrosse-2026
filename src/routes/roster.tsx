@@ -107,7 +107,7 @@ function RosterPage() {
 
           <div className="bg-white rounded-xl shadow-md overflow-hidden">
             <div className="bg-knights-navy px-6 py-3 flex items-center gap-2">
-              <Shield className="w-4 h-4 text-knights-gold" />
+              <Shield className="w-4 h-4 text-knights-blue" />
               <span className="text-white font-semibold text-sm uppercase tracking-wider">
                 Players — {players.length} Varsity
               </span>
@@ -157,12 +157,12 @@ function RosterPage() {
         <div className="bg-white rounded-xl shadow-md overflow-hidden">
           <div className="bg-knights-navy px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <BarChart2 className="w-4 h-4 text-knights-gold" />
+              <BarChart2 className="w-4 h-4 text-knights-blue" />
               <span className="text-white font-semibold text-sm uppercase tracking-wider">
                 Scoring Leaders
               </span>
             </div>
-            <span className="text-knights-gold/70 text-xs">
+            <span className="text-knights-blue/70 text-xs">
               Updated {new Date(statsLastUpdated + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </span>
           </div>

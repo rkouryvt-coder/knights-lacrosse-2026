@@ -39,7 +39,7 @@ function GameDetail() {
 
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
         <div className="bg-knights-navy text-white p-6">
-          <div className="flex items-center gap-2 text-knights-gold text-sm mb-4">
+          <div className="flex items-center gap-2 text-knights-blue text-sm mb-4">
             <Calendar className="w-4 h-4" />
             <span>{formattedDate}</span>
             {game.time !== 'TBD' && game.time !== 'Final' && (
@@ -50,7 +50,7 @@ function GameDetail() {
               </>
             )}
             {game.isConference && (
-              <span className="ml-2 text-xs bg-knights-gold/30 text-knights-gold px-2 py-0.5 rounded-full">
+              <span className="ml-2 text-xs bg-knights-blue/30 text-knights-blue px-2 py-0.5 rounded-full">
                 Conference
               </span>
             )}
@@ -58,7 +58,7 @@ function GameDetail() {
 
           <div className="flex items-center justify-between">
             <div className="text-center flex-1">
-              <div className="text-sm text-knights-gold uppercase tracking-wider mb-1">
+              <div className="text-sm text-knights-blue uppercase tracking-wider mb-1">
                 {game.location === 'home' ? 'Home' : 'Away'}
               </div>
               <div className="text-2xl font-bold">Knights</div>
@@ -87,7 +87,7 @@ function GameDetail() {
               </div>
             ) : (
               <div className="text-center px-8">
-                <div className="text-2xl font-bold text-knights-gold">VS</div>
+                <div className="text-2xl font-bold text-knights-blue">VS</div>
                 <div className="text-sm text-gray-300 mt-1">{game.time}</div>
               </div>
             )}
@@ -103,7 +103,7 @@ function GameDetail() {
 
         <div className="p-6 space-y-4">
           <div className="flex items-center gap-3 text-gray-600">
-            <MapPin className="w-5 h-5 text-knights-gold" />
+            <MapPin className="w-5 h-5 text-knights-blue" />
             <div>
               <div className="font-medium">{game.venue}</div>
               <div className="text-sm text-gray-400">
@@ -114,7 +114,7 @@ function GameDetail() {
 
           {game.status === 'upcoming' && (
             <div className="border-t pt-4 mt-4 text-center">
-              <span className="inline-block bg-knights-gold text-knights-navy px-4 py-2 rounded-full font-bold text-sm">
+              <span className="inline-block bg-knights-blue text-knights-navy px-4 py-2 rounded-full font-bold text-sm">
                 Game Day: {formattedDate} at {game.time}
               </span>
             </div>
