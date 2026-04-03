@@ -21,6 +21,9 @@ export const Route = createRootRoute({
       { name: 'twitter:description', content: 'Prospect Knights Boys Varsity Lacrosse — 2025-26 season schedule, scores, roster, and stats.' },
       { name: 'twitter:image', content: 'https://www.prospectlax.com/knights-logo.png' },
     ],
+    links: [
+      { rel: 'canonical', href: 'https://www.prospectlax.com' },
+    ],
   }),
   component: RootLayout,
   shellComponent: RootDocument,
