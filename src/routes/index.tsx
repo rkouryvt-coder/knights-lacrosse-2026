@@ -1,7 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { getSchedule } from '@/lib/schedule'
 import { getMediaFeed } from '@/lib/media'
-import { Calendar, Trophy, MapPin, Youtube, Newspaper } from 'lucide-react'
+import { scoringStats } from '@/data/stats'
+import { Calendar, Trophy, MapPin, Youtube, Newspaper, Flame, Users } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
@@ -29,6 +30,18 @@ function HomePage() {
   const totalGoalsFor = scoredGames.reduce((sum, g) => sum + (g.knightsScore ?? 0), 0)
   const totalGoalsAgainst = scoredGames.reduce((sum, g) => sum + (g.opponentScore ?? 0), 0)
 
+  const confGames = scoredGames.filter((g) => g.isConference)
+  const confWins = confGames.filter((g) => g.knightsScore! > g.opponentScore!).length
+  const confLosses = confGames.filter((g) => g.knightsScore! < g.opponentScore!).length
+
+  let winStreak = 0
+  for (const g of scoredGames) {
+    if (g.knightsScore! > g.opponentScore!) winStreak++
+    else break
+  }
+
+  const topScorers = [...scoringStats].sort((a, b) => b.pts - a.pts).slice(0, 3)
+
   const nextGame = upcomingGames[0]
   const lastScoredGame = scoredGames[0]
 
@@ -38,28 +51,81 @@ function HomePage() {
       <div className="bg-knights-navy text-white py-12 px-4 shrink-0">
         <div className="max-w-6xl mx-auto text-center">
           <img src="/knights-logo.png" alt="Prospect Knights" className="w-24 h-24 object-cover rounded-full mx-auto mb-4" />
+          <div className="text-xs text-gray-400 uppercase tracking-widest mb-2">2025–26 Season</div>
           <h1 className="text-4xl md:text-5xl font-bold mb-2">Prospect Knights</h1>
-          <p className="text-knights-blue text-lg tracking-wider uppercase mb-6">
-            High School Lacrosse · 2025-26
+          <p className="text-knights-blue text-lg mb-6 italic">
+            Where your athlete becomes a player.
           </p>
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-8 mb-4">
             <div>
               <div className="text-3xl font-bold">{wins}-{losses}</div>
-              <div className="text-sm text-gray-300">Record</div>
+              <div className="text-sm text-gray-300">
+                Overall
+                {confGames.length > 0 && (
+                  <span className="block text-xs text-gray-400">{confWins}-{confLosses} Conf</span>
+                )}
+              </div>
             </div>
             <div className="w-px h-10 bg-gray-600" />
             <div>
               <div className="text-3xl font-bold">{totalGoalsFor}</div>
-              <div className="text-sm text-gray-300">Goals For</div>
+              <div className="text-sm text-gray-300">
+                Goals For
+                {scoredGames.length > 0 && (
+                  <span className="block text-xs text-gray-400">
+                    {(totalGoalsFor / scoredGames.length).toFixed(1)} avg
+                  </span>
+                )}
+              </div>
             </div>
             <div className="w-px h-10 bg-gray-600" />
             <div>
-              <div className="text-3xl font-bold">{totalGoalsAgainst}</div>
-              <div className="text-sm text-gray-300">Goals Against</div>
+              <div className="text-3xl font-bold">+{totalGoalsFor - totalGoalsAgainst}</div>
+              <div className="text-sm text-gray-300">Goal Diff</div>
             </div>
+          </div>
+          {winStreak >= 2 && (
+            <div className="flex items-center justify-center gap-1.5 mb-6">
+              <Flame className="w-4 h-4 text-orange-400" />
+              <span className="text-orange-400 text-sm font-semibold">{winStreak}-game win streak</span>
+            </div>
+          )}
+          <div className={`flex items-center justify-center gap-4 ${winStreak >= 2 ? '' : 'mt-6'}`}>
+            <Link
+              to="/schedule"
+              className="px-5 py-2 bg-knights-blue text-knights-navy font-semibold rounded-lg hover:opacity-90 transition-opacity text-sm"
+            >
+              View Schedule
+            </Link>
+            <Link
+              to="/roster"
+              className="px-5 py-2 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/10 transition-colors text-sm"
+            >
+              Meet the Team
+            </Link>
           </div>
         </div>
       </div>
+
+      {nextGame && (
+        <div className="bg-knights-blue/20 border-b border-knights-blue/30 px-4 py-3 shrink-0">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 text-white">
+              <Calendar className="w-4 h-4 text-knights-blue shrink-0" />
+              <span className="text-sm font-medium">
+                Next: {nextGame.location === 'home' ? 'vs' : '@'} <strong>{nextGame.opponent}</strong>
+                {' '}— {formatDate(nextGame.date)} at {nextGame.time}
+              </span>
+              {nextGame.location === 'home' && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-knights-blue/30 text-knights-blue font-medium">HOME</span>
+              )}
+            </div>
+            <Link to="/schedule" className="text-xs text-knights-blue font-medium hover:underline shrink-0">
+              Full Schedule →
+            </Link>
+          </div>
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -144,6 +210,34 @@ function HomePage() {
             </Link>
           )}
         </div>
+
+        {/* Scoring Leaders */}
+        {topScorers.length > 0 && (
+          <div className="bg-white rounded-xl shadow-md p-6 mt-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-knights-navy" />
+                <h2 className="text-lg font-bold text-knights-navy">Scoring Leaders</h2>
+              </div>
+              <Link to="/roster" className="text-sm text-knights-blue font-medium hover:underline">
+                Full Stats →
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              {topScorers.map((p, i) => (
+                <div key={p.number} className={`flex-1 flex items-center gap-3 p-3 rounded-lg ${i === 0 ? 'bg-knights-navy/5 border border-knights-navy/10' : 'bg-gray-50'}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${i === 0 ? 'bg-knights-navy text-white' : 'bg-gray-200 text-gray-600'}`}>
+                    {i + 1}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-semibold text-knights-navy text-sm truncate">{p.name}</div>
+                    <div className="text-xs text-gray-500">{p.pts} pts · {p.g}G {p.asst}A</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Recent Results */}
         {scoredGames.length > 0 && (

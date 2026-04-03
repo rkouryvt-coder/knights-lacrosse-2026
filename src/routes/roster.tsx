@@ -55,12 +55,30 @@ function RosterPage() {
 
   const statsByNumber = Object.fromEntries(scoringStats.map((s) => [s.number, s]))
 
+  const gradeCounts = players.reduce<Record<string, number>>((acc, p) => {
+    acc[p.grade] = (acc[p.grade] ?? 0) + 1
+    return acc
+  }, {})
+  const gradeOrder = ['Sr.', 'Jr.', 'So.', 'Fr.']
+
   return (
     <div className="h-full overflow-y-auto">
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-knights-navy">Team Roster</h1>
         <p className="text-gray-500 mt-1">2025-26 Spring Season · Head Coach: Tom Riesing</p>
+        <div className="flex flex-wrap gap-3 mt-3">
+          {gradeOrder.filter((g) => gradeCounts[g]).map((grade) => (
+            <div key={grade} className="flex items-center gap-1.5 text-sm text-gray-600">
+              <span className="font-semibold text-knights-navy">{gradeCounts[grade]}</span>
+              <span>{grade === 'Sr.' ? 'Seniors' : grade === 'Jr.' ? 'Juniors' : grade === 'So.' ? 'Sophomores' : 'Freshmen'}</span>
+            </div>
+          ))}
+          <div className="flex items-center gap-1.5 text-sm text-gray-400">
+            <span>·</span>
+            <span>{players.length} total</span>
+          </div>
+        </div>
       </div>
 
       {/* Tabs */}
