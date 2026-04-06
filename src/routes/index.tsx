@@ -3,6 +3,7 @@ import { getSchedule } from '@/lib/schedule'
 import { getMediaFeed } from '@/lib/media'
 import { getGameWeather } from '@/lib/weather'
 import type { GameWeather } from '@/lib/weather'
+import { useState, useEffect } from 'react'
 import { scoringStats } from '@/data/stats'
 import { Calendar, Trophy, MapPin, Youtube, Newspaper, Flame, Users, Instagram } from 'lucide-react'
 
@@ -140,23 +141,7 @@ function HomePage() {
       </div>
 
       {nextGame && (
-        <div className="bg-knights-blue/20 border-b border-knights-blue/30 px-4 py-3 shrink-0">
-          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3 text-white">
-              <Calendar className="w-4 h-4 text-knights-blue shrink-0" />
-              <span className="text-sm font-medium">
-                Next: {nextGame.location === 'home' ? 'vs' : '@'} <strong>{nextGame.opponent}</strong>
-                {' '}— {formatDate(nextGame.date)} at {nextGame.time}
-              </span>
-              {nextGame.location === 'home' && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-knights-blue/30 text-knights-blue font-medium">HOME</span>
-              )}
-            </div>
-            <Link to="/schedule" className="text-xs text-knights-blue font-medium hover:underline shrink-0">
-              Full Schedule →
-            </Link>
-          </div>
-        </div>
+        <NextGameBanner game={nextGame} />
       )}
 
       <div className="flex-1 overflow-y-auto">
@@ -468,6 +453,61 @@ function HomePage() {
           </div>
         )}
       </div>
+      </div>
+    </div>
+  )
+}
+
+function NextGameBanner({ game }: { game: { date: string; time: string; opponent: string; location: string } }) {
+  const [countdown, setCountdown] = useState<string | null>(null)
+  const [isGameDay, setIsGameDay] = useState(false)
+
+  useEffect(() => {
+    function calc() {
+      const [h, m] = game.time.replace(' PM', '').replace(' AM', '').split(':').map(Number)
+      const isPM = game.time.includes('PM')
+      const gameHour = isPM && h !== 12 ? h + 12 : h
+      const gameDate = new Date(`${game.date}T${String(gameHour).padStart(2, '0')}:${String(m).padStart(2, '0')}:00`)
+      const now = new Date()
+      const diff = gameDate.getTime() - now.getTime()
+      const hoursUntil = diff / 1000 / 60 / 60
+      const today = now.toDateString() === gameDate.toDateString()
+      setIsGameDay(today)
+      if (diff > 0 && hoursUntil <= 24) {
+        const hrs = Math.floor(diff / 1000 / 60 / 60)
+        const mins = Math.floor((diff / 1000 / 60) % 60)
+        const secs = Math.floor((diff / 1000) % 60)
+        setCountdown(`${hrs}h ${String(mins).padStart(2, '0')}m ${String(secs).padStart(2, '0')}s`)
+      } else {
+        setCountdown(null)
+      }
+    }
+    calc()
+    const id = setInterval(calc, 1000)
+    return () => clearInterval(id)
+  }, [game.date, game.time])
+
+  return (
+    <div className={`border-b px-4 py-3 shrink-0 ${isGameDay ? 'bg-knights-blue/30 border-knights-blue/50' : 'bg-knights-blue/20 border-knights-blue/30'}`}>
+      <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 text-white">
+          <Calendar className="w-4 h-4 text-knights-blue shrink-0" />
+          <span className="text-sm font-medium">
+            {isGameDay ? <span className="text-knights-blue font-bold">GAME DAY · </span> : 'Next: '}
+            {game.location === 'home' ? 'vs' : '@'} <strong>{game.opponent}</strong>
+            {' '}— {countdown ? (
+              <span className="font-mono text-knights-blue font-bold">{countdown}</span>
+            ) : (
+              `${formatDate(game.date)} at ${game.time}`
+            )}
+          </span>
+          {game.location === 'home' && (
+            <span className="text-xs px-2 py-0.5 rounded-full bg-knights-blue/30 text-knights-blue font-medium">HOME</span>
+          )}
+        </div>
+        <Link to="/schedule" className="text-xs text-knights-blue font-medium hover:underline shrink-0">
+          Full Schedule →
+        </Link>
       </div>
     </div>
   )

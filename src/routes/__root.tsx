@@ -79,6 +79,13 @@ function RootLayout() {
               >
                 Roster
               </Link>
+              <Link
+                to="/photos"
+                className="text-sm font-medium hover:text-knights-blue transition-colors no-underline text-white"
+                activeProps={{ className: 'text-sm font-medium text-knights-blue no-underline' }}
+              >
+                Photos
+              </Link>
             </nav>
           </div>
         </div>
@@ -130,6 +137,12 @@ function RootLayout() {
                 className="text-gray-400 hover:text-white transition-colors text-sm no-underline"
               >
                 Roster
+              </Link>
+              <Link
+                to="/photos"
+                className="text-gray-400 hover:text-white transition-colors text-sm no-underline"
+              >
+                Photos
               </Link>
             </div>
           </div>
