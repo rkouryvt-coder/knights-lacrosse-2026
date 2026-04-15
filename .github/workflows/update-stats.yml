@@ -25,9 +25,11 @@ jobs:
         run: npx playwright install chromium --with-deps
 
       - name: Scrape opponent records
+        continue-on-error: true
         run: node scripts/scrape-records.mjs
 
       - name: Scrape player stats
+        continue-on-error: true
         run: node scripts/scrape-stats.mjs
 
       - name: Commit if anything changed

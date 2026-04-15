@@ -16,7 +16,7 @@ async function scrape() {
   const page = await browser.newPage()
 
   console.log('Loading MaxPreps stats page...')
-  await page.goto(STATS_URL, { waitUntil: 'networkidle', timeout: 30000 })
+  await page.goto(STATS_URL, { waitUntil: 'domcontentloaded', timeout: 60000 })
 
   // Wait for the stats table to appear
   await page.waitForSelector('table', { timeout: 15000 }).catch(() => {
