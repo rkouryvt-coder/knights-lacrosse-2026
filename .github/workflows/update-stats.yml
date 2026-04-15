@@ -1,4 +1,4 @@
-name: Update Scoring Stats
+name: Weekly Stats Update
 
 on:
   schedule:
@@ -21,12 +21,15 @@ jobs:
       - name: Install Playwright + Chromium
         run: npx playwright install chromium --with-deps
 
-      - name: Scrape MaxPreps stats
+      - name: Scrape opponent records
+        run: node scripts/scrape-records.mjs
+
+      - name: Scrape player stats
         run: node scripts/scrape-stats.mjs
 
-      - name: Commit if stats changed
+      - name: Commit if anything changed
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-          git add src/data/stats.ts
-          git diff --staged --quiet && echo "No stat changes." || (git commit -m "chore: update scoring stats from MaxPreps" && git push)
+          git add src/data/games.ts src/data/stats.ts
+          git diff --staged --quiet && echo "No changes." || (git commit -m "chore: weekly update — opponent records and player stats" && git push)
