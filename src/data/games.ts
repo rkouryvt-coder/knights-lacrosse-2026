@@ -69,7 +69,7 @@ export const games: Array<Game> = [
     knightsScore: 8,
     opponentScore: 14,
     status: 'final',
-    opponentRecord: '2-3',
+    opponentRecord: '7-7',
   },
   {
     id: 5,
@@ -82,7 +82,7 @@ export const games: Array<Game> = [
     knightsScore: 8,
     opponentScore: 3,
     status: 'final',
-    opponentRecord: '3-5',
+    opponentRecord: '6-8',
   },
   {
     id: 6,
@@ -96,7 +96,7 @@ export const games: Array<Game> = [
     opponentScore: 9,
     status: 'final',
     isConference: true,
-    opponentRecord: '1-2',
+    opponentRecord: '9-5',
   },
   {
     id: 7,
@@ -122,7 +122,7 @@ export const games: Array<Game> = [
     knightsScore: null,
     opponentScore: null,
     status: 'upcoming',
-    opponentRecord: '2-0',
+    opponentRecord: '12-2',
   },
   {
     id: 9,
