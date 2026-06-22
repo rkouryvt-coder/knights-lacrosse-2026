@@ -29,7 +29,7 @@ export const games: Array<Game> = [
     knightsScore: 15,
     opponentScore: 2,
     status: 'final',
-    opponentRecord: '1-3',
+    opponentRecord: '6-12',
   },
   {
     id: 2,
