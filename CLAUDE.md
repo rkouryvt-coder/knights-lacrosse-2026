@@ -25,7 +25,3 @@ with **Tailwind CSS 4**, written in **TypeScript 5.7 (strict)**, deployed on
 ## Notes
 
 - Never commit secrets, `.env*` files, or `*token*.json` / `*credentials*.json`.
-- **Lockfile drift:** `package-lock.json` is currently out of sync with
-  `package.json` (`playwright` is missing from the lock), so `npm ci` fails.
-  The SessionStart hook uses `npm install` to work around it. Run `npm install`
-  and commit the updated `package-lock.json` to restore `npm ci`.
