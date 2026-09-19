@@ -15,8 +15,5 @@ fi
 
 cd "${CLAUDE_PROJECT_DIR:-.}"
 
-# npm project (package-lock.json). We use `npm install` rather than `npm ci`
-# because the committed lock file is currently out of sync with package.json
-# (playwright is missing from it), and `npm ci` refuses to run on drift.
-# Regenerate the lock file (`npm install` + commit) to allow `npm ci` here.
-npm install --no-fund --no-audit
+# npm project (package-lock.json). npm ci is exact and idempotent.
+npm ci --no-fund --no-audit
