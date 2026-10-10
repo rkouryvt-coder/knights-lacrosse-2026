@@ -1,4 +1,4 @@
-const V="wg-v7",CORE=["/","/index.html","/manifest.webmanifest","/apple-touch-icon.png","/icon-192.png","/icon-512.png"];
+const V="wg-v8",CORE=["/","/index.html","/manifest.webmanifest","/apple-touch-icon.png","/icon-192.png","/icon-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{const u=new URL(e.request.url);if(e.request.method!=="GET")return;if(u.pathname.startsWith("/api/")||u.pathname.startsWith("/.netlify/"))return;

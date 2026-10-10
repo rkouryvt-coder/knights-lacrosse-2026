@@ -364,6 +364,96 @@ input,textarea{caret-color:var(--wine-ink)}
 #intro.titled .tag{opacity:1;transform:none}
 #intro .skip{position:absolute;bottom:calc(24px + env(safe-area-inset-bottom,0px));font:500 .7rem var(--mono);letter-spacing:.3em;color:#D9C6BE}
 
+/* =========================== LA BOTTEGA =========================== */
+.perk{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;margin:0 0 18px;padding:14px 16px;border-radius:20px;text-decoration:none;color:#F6E7D8;
+  background:radial-gradient(120% 140% at 90% 0%,#9A2B3F,#4E111C 75%);box-shadow:inset 0 0 0 1px rgba(243,213,138,.45),0 14px 26px -14px rgba(80,20,30,.6);border:0;width:100%;text-align:left;font:inherit;cursor:pointer}
+.perk b{display:block;font:600 1.12rem/1.15 var(--display);color:var(--gold-hi)}
+.perk span{font-size:.9rem;color:#EBCFC4}
+.perk .ico{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(243,213,138,.16);font-size:1.3rem}
+.perk .go{font-size:1.2rem;color:var(--gold-hi)}
+.shop{display:grid;gap:16px}
+.prod{display:grid;border-radius:26px;overflow:hidden;background:linear-gradient(170deg,var(--paper),var(--card));border:1px solid var(--line);box-shadow:0 16px 32px -16px var(--shadow)}
+.stage{all:unset;box-sizing:border-box;position:relative;display:grid;place-items:center;aspect-ratio:16/11;cursor:pointer;
+  background:radial-gradient(80% 90% at 78% 6%,rgba(255,214,140,.7),transparent 60%),linear-gradient(180deg,#E9D3A6,#D6B67E)}
+:root[data-sky="night"] .stage{background:radial-gradient(80% 90% at 78% 6%,rgba(255,170,80,.35),transparent 60%),linear-gradient(180deg,#3A2A22,#241914)}
+.stage:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
+.stage svg{width:min(70%,300px);height:auto;filter:drop-shadow(-12px 16px 14px rgba(60,30,10,.35));overflow:visible}
+.stage .hint{position:absolute;right:12px;bottom:10px;font:500 .68rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#4A3410;background:rgba(255,249,236,.8);padding:7px 10px;border-radius:999px}
+.stage .free{position:absolute;left:12px;top:12px;font:600 .76rem/1 var(--body);color:#FFF4E6;background:var(--wine);padding:8px 11px;border-radius:999px;box-shadow:0 6px 14px rgba(122,31,46,.35)}
+.prod .info{padding:18px;display:grid;gap:10px;min-width:0}
+.prod .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.prod h3{font-size:clamp(22px,6.4vw,27px);line-height:1.05;letter-spacing:-.02em;min-width:0}
+.eur{font:600 1.3rem/1 var(--display);color:var(--wine-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.prod .desc{margin:0;font:italic 400 1.08rem/1.4 var(--display);color:var(--ink-2)}
+.prod ul{margin:0;padding-left:1.1em;color:var(--stone);font-size:.9rem}
+.opts{display:grid;gap:10px}
+.swatches{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sw{width:40px;height:40px;border-radius:50%;border:2px solid rgba(0,0,0,.14);cursor:pointer;padding:0;position:relative}
+.sw::after{content:"";position:absolute;inset:-4px}
+.sw[aria-pressed="true"]{outline:3px solid var(--gold);outline-offset:2px}
+.sw-lbl{font-size:.88rem;color:var(--stone)}
+.sizes{display:flex;gap:6px;flex-wrap:wrap}
+.sz{min-width:44px;min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--wall-2);font:600 .9rem var(--body);color:var(--ink)}
+.sz[aria-pressed="true"]{background:var(--ink);color:var(--wall);border-color:var(--ink)}
+.add{width:100%;margin-top:4px}
+.add.ok{background:linear-gradient(180deg,#3D8A5A,#2A6340)}
+.add.ok::after{content:"✓"}
+.bgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+.bundle{position:relative;display:grid;gap:10px;padding:16px;border-radius:24px;background:linear-gradient(170deg,var(--paper),var(--card));border:1px solid var(--line);box-shadow:0 14px 28px -16px var(--shadow)}
+.bundle.star{box-shadow:inset 0 0 0 2px var(--gold),0 14px 28px -16px var(--shadow)}
+.ribbon{position:absolute;top:-11px;right:16px;background:var(--wine);color:#FFF3E4;font:500 .68rem/1 var(--mono);letter-spacing:.14em;padding:7px 10px;border-radius:999px}
+.thumbs{display:flex;gap:6px;align-items:center;justify-content:center;min-height:96px;padding:10px;border-radius:16px;background:radial-gradient(90% 90% at 80% 0,rgba(255,214,140,.6),transparent 60%),#E3C994}
+:root[data-sky="night"] .thumbs{background:radial-gradient(90% 90% at 80% 0,rgba(255,170,80,.3),transparent 60%),#2E221B}
+.thumbs svg{width:68px;height:auto;flex:none;filter:drop-shadow(-4px 6px 5px rgba(60,30,10,.3))}
+.thumbs .page{display:none}
+.thumbs .x2{font:600 1rem var(--display);color:var(--wine-ink);margin-left:-4px}
+.bundle h3{font-size:1.3rem}
+.bundle .what{margin:0;color:var(--stone);font-size:.9rem}
+.prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.was{text-decoration:line-through;color:var(--stone);font-size:.95rem}
+.save{font-size:.8rem;font-weight:700;color:var(--open);background:var(--open-soft);padding:4px 9px;border-radius:999px}
+/* motion on the art */
+.bell-g{transform-box:fill-box;transform-origin:50% 0}
+.ringing .bell-g{animation:ring 1s ease-in-out}
+.orn-door{transform-box:fill-box;transform-origin:0 50%;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.stage.open .orn-door{transform:scaleX(.1) skewY(-10deg)}
+.orn-swing{transform-box:fill-box;transform-origin:50% 0;animation:sway 4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(3deg)}}
+.journal .page,.journal .cover{transition:opacity .5s}
+.journal:not(.open) .page{opacity:0}
+.journal.open .cover{opacity:0}
+/* bag */
+.bagbtn{position:fixed;z-index:6;right:16px;bottom:calc(88px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 16px;border-radius:999px;border:0;
+  background:var(--ink);color:var(--wall);font:600 .95rem var(--body);box-shadow:0 12px 26px rgba(20,6,8,.35)}
+.bagbtn[hidden],:root:not([data-view="shop"]) .bagbtn{display:none}
+.bagbtn i{font-style:normal;min-width:24px;height:24px;border-radius:12px;display:grid;place-items:center;background:var(--gold-hi);color:#2A1306;font-size:.8rem;padding:0 6px}
+.bag h2{font-size:clamp(26px,7vw,32px);padding-right:50px}
+.line{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.line svg{width:56px;height:auto}
+.line .page{display:none}
+.line b{display:block;font:600 1.02rem/1.2 var(--display)}
+.line small{color:var(--stone)}
+.line .rm{min-width:44px;min-height:44px;border:0;background:none;color:var(--stone);text-decoration:underline;font-size:.85rem}
+.tot{display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 4px;font:600 1.2rem var(--display)}
+.form{display:grid;gap:10px;margin-top:12px}
+.form label{font:500 .72rem/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--stone)}
+.form input,.form textarea,.form select{width:100%;min-width:0;min-height:48px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--paper);color:var(--ink);font:inherit;font-size:16px}
+.form textarea{min-height:84px;resize:vertical}
+.form .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.form .note{font-size:.86rem;color:var(--stone);margin:0}
+.thanks{text-align:center;display:grid;gap:10px;justify-items:center;padding:20px 6px}
+.thanks h3{font-size:1.6rem}
+/* passport tee reward */
+.reward{margin-top:16px;border-radius:24px;padding:18px;background:linear-gradient(170deg,var(--paper),var(--card));border:1px solid var(--line);box-shadow:0 14px 28px -16px var(--shadow);display:grid;gap:12px}
+.reward .rhead{display:grid;grid-template-columns:84px minmax(0,1fr);gap:14px;align-items:center}
+.reward .rhead svg{width:84px;height:auto}
+.reward h3{font-size:1.35rem;line-height:1.1}
+.reward p{margin:0;color:var(--ink-2);font-size:.95rem}
+.bar{height:12px;border-radius:999px;background:var(--wall-2);border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#E2B65C,var(--wine-hi))}
+.reward.won{box-shadow:inset 0 0 0 2px var(--gold),0 18px 34px -16px var(--shadow)}
+.terms{font-size:.8rem;color:var(--stone)}
+
 @media (max-width:360px){
   .list{gap:10px}
   .tile{padding:14px 8px 12px}
@@ -526,8 +616,18 @@ input,textarea{caret-color:var(--wine-ink)}
 
     <section id="tab-pass" data-tab hidden role="tabpanel">
       <div class="pass"><div class="patti" aria-hidden="true"></div><span class="eyebrow">Passaporto delle buchette</span><h2 id="passTitle">0 of 14 windows</h2><div class="rank" id="passRank"></div></div>
+      <div class="reward" id="reward"></div>
       <div class="stamps" id="stamps"></div>
       <p class="foot">Tap "I drank here" on any window to earn its stamp. Stamps stay on this phone.</p>
+    </section>
+
+    <section id="tab-shop" data-tab hidden role="tabpanel">
+      <div class="section-h"><h2>La Bottega</h2><span class="eyebrow">Little pieces of Florence to take home</span></div>
+      <button class="perk" data-go="pass" id="shopPerk"><span class="ico" aria-hidden="true">👕</span><span><b>Fill the passport, the tee is on us</b><span id="perkLine">Stamp every wine window and we send you a free Toc Toc Tee.</span></span><span class="go" aria-hidden="true">→</span></button>
+      <div class="shop" id="shop"></div>
+      <div class="section-h"><h2>Bundles</h2><span class="eyebrow">Wrapped in passport red</span></div>
+      <div class="bgrid" id="bundles"></div>
+      <p class="foot">Made to order and shipped to Europe, the UK and North America in about 10 days. Place your order here and we email a secure payment link to confirm it. Nothing is charged until you pay that link.</p>
     </section>
 
     <section id="tab-flo" data-tab hidden role="tabpanel">
@@ -563,8 +663,13 @@ input,textarea{caret-color:var(--wine-ink)}
   <button role="tab" aria-selected="false" data-go="map"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6-6-6-11a6 6 0 0 1 12 0c0 5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>Map</button>
   <button role="tab" aria-selected="false" data-go="piazza" id="piazzaTab" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 20c0-3 2-5 5-5s5 2 5 5M11 20c0-3 2-5 5-5s5 2 5 5"/></svg>Piazza</button>
   <button role="tab" aria-selected="false" data-go="pass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="11" r="3"/></svg>Passport</button>
+  <button role="tab" aria-selected="false" data-go="shop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>Shop</button>
   <button role="tab" aria-selected="false" data-go="flo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V11a8 8 0 0 1 16 0v10M4 21h16M12 3v3"/></svg>Florence</button>
 </nav>
+<button class="bagbtn" id="bagBtn" hidden aria-label="Open your bag"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg><span id="bagSum">Bag</span><i id="bagN">0</i></button>
+<div class="detail" id="bag" hidden><div class="pane bag" role="dialog" aria-modal="true" aria-labelledby="bagH"><button class="x" id="bagX" aria-label="Close">✕</button><div id="bagBody"></div></div></div>
+<form name="order" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="bot-field"><input name="name"><input name="email"><textarea name="address"></textarea><input name="country"><textarea name="items"></textarea><input name="total"></form>
+<form name="passport-tee" data-netlify="true" netlify-honeypot="bot-field" hidden><input name="bot-field"><input name="name"><input name="email"><input name="size"><input name="color"><textarea name="address"></textarea><input name="country"><textarea name="stamps"></textarea></form>
 <div class="toast" id="toast" role="status"></div>
 <div class="detail" id="detail" hidden><div class="pane" role="dialog" aria-modal="true" aria-label="Wine window details"><button class="x" id="detailX" aria-label="Close">✕</button><div id="detailBody"></div></div></div>
 <div id="cheers" hidden></div>
@@ -803,7 +908,7 @@ function setSky(t){
   const m=t.m,ph=m<360?"night":m<540?"dawn":m<1020?"day":m<1230?"dusk":"night";
   document.documentElement.dataset.sky=ph;
   let f;if(ph==="night"){const mm=m<360?m+1440:m;f=(mm-1230)/(1800-1230)}else f=(m-360)/(1230-360);
-  f=Math.max(0,Math.min(1,f));const o=$("#orb");o.style.left=(10+f*80)+"%";o.style.top=(64-Math.sin(f*Math.PI)*48)+"%";
+  f=Math.max(0,Math.min(1,f));const o=$("#orb");o.style.left=(72+f*20)+"%";o.style.top=(64-Math.sin(f*Math.PI)*14)+"%";
 }
 (function(){let s="";for(let i=0;i<46;i++){s+=`<i class="${i%7?"":"b"}" style="left:${(Math.random()*100).toFixed(1)}%;top:${(Math.random()*100).toFixed(1)}%;animation-delay:${(Math.random()*3).toFixed(2)}s"></i>`}$("#stars").innerHTML=s})();
 
@@ -902,7 +1007,7 @@ function renderMap(t){
   $("#map").innerHTML=g;
   $("#mapDetail").innerHTML=selected?card(W.find(w=>w.id===selected),t):`<p class="foot">Glowing doors are pouring right now. Pick "My location" in the From menu to put yourself on the map. The Arno splits the centre from the Oltrarno, where Babae and Fantappié live.</p>`;
 }
-function renderPass(){
+function renderPass(){if(typeof renderReward==="function")renderReward();
   const n=W.filter(w=>stamps[w.id]).length;
   const nw=W.filter(w=>w.kind==="wine"&&stamps[w.id]).length,tot=W.filter(w=>w.kind==="wine").length;$("#passTitle").textContent=`${nw} of ${tot} windows`+(stamps.vivoli?" + gelato bonus":"");
   $("#passRank").textContent=nw>=10?"Rank: Granduca. You know Florence like Cosimo did.":nw>=6?"Rank: Mercante di vino":nw>=3?"Rank: Fiorentino d'adozione":nw>=1?"Rank: Pellegrino, first window found":"Rank: Turista. Go knock on a window.";
@@ -1066,6 +1171,111 @@ async function drawFeed(){
     render();drawFeed();
   },()=>{});
 })();
+
+/* ===== La Bottega ===== */
+const ART={"tee": "<svg viewBox=\"0 0 300 260\" aria-hidden=\"true\">\n          <path id=\"teeBody\" d=\"M95 22C110 34 130 40 150 40S190 34 205 22L262 48L284 104L246 118L238 96V246H62V96L54 118L16 104L38 48Z\" fill=\"#F4EDE0\" stroke=\"rgba(60,40,20,.25)\" stroke-width=\"2\"/>\n          <path d=\"M95 22C110 34 130 40 150 40S190 34 205 22\" fill=\"none\" stroke=\"rgba(60,40,20,.3)\" stroke-width=\"5\"/>\n          <g transform=\"translate(150 118)\">\n            <path d=\"M-17 22V-4A17 17 0 0 1 17 -4V22Z\" fill=\"#8A929A\"/>\n            <path d=\"M-11 22V-2A11 11 0 0 1 11 -2V22Z\" fill=\"#F0A24A\"/>\n            <path d=\"M-11 22V-2A11 11 0 0 1 11 -2V22Z\" fill=\"#7E4A24\" transform=\"translate(-11 0) scale(.25 1) translate(11 0)\"/>\n            <path d=\"M-3 6h6c0 5-1 7-3 7s-3-2-3-7z\" fill=\"#9B2335\"/><path d=\"M0 13v5M-3 18h6\" stroke=\"#F6E7D8\" stroke-width=\"1.2\"/>\n            <rect x=\"-20\" y=\"22\" width=\"40\" height=\"3.5\" rx=\"1\" fill=\"#6E787C\"/>\n          </g>\n          <text id=\"teeText\" x=\"150\" y=\"172\" text-anchor=\"middle\" font-family=\"Caveat,cursive\" font-size=\"30\" font-weight=\"700\" fill=\"#7A1F2E\">Toc toc</text>\n        </svg>", "journal": "<svg viewBox=\"0 0 300 230\" aria-hidden=\"true\">\n          <g class=\"cover\">\n            <rect x=\"70\" y=\"14\" width=\"160\" height=\"206\" rx=\"8\" fill=\"#6A1726\"/>\n            <rect x=\"70\" y=\"14\" width=\"160\" height=\"206\" rx=\"8\" fill=\"none\" stroke=\"rgba(0,0,0,.25)\" stroke-width=\"2\"/>\n            <rect x=\"70\" y=\"14\" width=\"14\" height=\"206\" fill=\"rgba(0,0,0,.18)\"/>\n            <rect x=\"94\" y=\"30\" width=\"122\" height=\"174\" rx=\"4\" fill=\"none\" stroke=\"#E2BE6A\" stroke-width=\"1.4\"/>\n            <text x=\"155\" y=\"62\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-weight=\"700\" font-size=\"13\" fill=\"#F0CF7C\" letter-spacing=\"2\">PASSAPORTO</text>\n            <text x=\"155\" y=\"78\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"8.5\" fill=\"#E2BE6A\" letter-spacing=\"2\">DELLE BUCHETTE</text>\n            <g transform=\"translate(155 128)\"><path d=\"M-22 34V-2A22 22 0 0 1 22 -2V34Z\" fill=\"none\" stroke=\"#F0CF7C\" stroke-width=\"2.4\"/><path d=\"M-14 34V0A14 14 0 0 1 14 0V34\" fill=\"none\" stroke=\"#F0CF7C\" stroke-width=\"1.4\"/><circle cx=\"9\" cy=\"16\" r=\"2\" fill=\"#F0CF7C\"/><path d=\"M-26 34h52\" stroke=\"#F0CF7C\" stroke-width=\"2.4\"/></g>\n            <text x=\"155\" y=\"190\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"8\" fill=\"#E2BE6A\" letter-spacing=\"3\">FIRENZE</text>\n          </g>\n          <g class=\"page\">\n            <rect x=\"14\" y=\"14\" width=\"272\" height=\"206\" rx=\"6\" fill=\"#FBF3E2\" stroke=\"rgba(60,40,20,.25)\"/>\n            <path d=\"M150 14V220\" stroke=\"rgba(60,40,20,.25)\" stroke-width=\"2\"/>\n            <g font-family=\"Fraunces,Georgia,serif\" font-style=\"italic\" fill=\"#5A4A3A\" font-size=\"11\">\n              <text x=\"26\" y=\"36\">Osteria Belle Donne</text><path d=\"M26 44H138M26 58H138M26 72H138\" stroke=\"rgba(60,40,20,.2)\"/>\n              <text x=\"26\" y=\"104\">La Tenda Rossa</text><path d=\"M26 112H138M26 126H138\" stroke=\"rgba(60,40,20,.2)\"/>\n              <text x=\"162\" y=\"36\">Babae</text><path d=\"M162 44H274M162 58H274\" stroke=\"rgba(60,40,20,.2)\"/>\n            </g>\n            <g transform=\"translate(96 168) rotate(-12)\"><circle r=\"28\" fill=\"none\" stroke=\"#9B2335\" stroke-width=\"2.4\"/><circle r=\"22\" fill=\"none\" stroke=\"#9B2335\" stroke-width=\"1\"/><text y=\"-6\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"7\" fill=\"#9B2335\">BELLE DONNE</text><text y=\"6\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"9\" font-weight=\"700\" fill=\"#9B2335\">7 X 26</text></g>\n            <g transform=\"translate(220 112) rotate(9)\"><circle r=\"28\" fill=\"none\" stroke=\"#2F5E7A\" stroke-width=\"2.4\"/><circle r=\"22\" fill=\"none\" stroke=\"#2F5E7A\" stroke-width=\"1\"/><text y=\"-6\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"7\" fill=\"#2F5E7A\">BABAE</text><text y=\"6\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"9\" font-weight=\"700\" fill=\"#2F5E7A\">8 X 26</text></g>\n            <g transform=\"translate(222 186)\"><circle r=\"24\" fill=\"none\" stroke=\"rgba(60,40,20,.3)\" stroke-width=\"1.4\" stroke-dasharray=\"3 3\"/><text y=\"3\" text-anchor=\"middle\" font-family=\"Instrument Sans,sans-serif\" font-size=\"7\" fill=\"rgba(60,40,20,.5)\">your next stamp</text></g>\n          </g>\n        </svg>", "bell": "<svg viewBox=\"0 0 300 260\" aria-hidden=\"true\">\n          <defs><linearGradient id=\"shBrass\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#F6DE94\"/><stop offset=\".5\" stop-color=\"#C69A3C\"/><stop offset=\"1\" stop-color=\"#7C5A17\"/></linearGradient></defs>\n          <circle cx=\"150\" cy=\"38\" r=\"24\" fill=\"none\" stroke=\"url(#shBrass)\" stroke-width=\"5\"/>\n          <g class=\"bell-g\">\n            <path d=\"M150 62V84\" stroke=\"#8C6A2A\" stroke-width=\"4\" stroke-dasharray=\"5 3\"/>\n            <path d=\"M112 90h42v-6h-42z\" fill=\"#5A3A22\"/>\n            <rect x=\"96\" y=\"86\" width=\"44\" height=\"56\" rx=\"6\" fill=\"#6B4228\" transform=\"rotate(-10 118 114)\"/>\n            <text x=\"118\" y=\"112\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"7.5\" font-weight=\"700\" fill=\"#E9C98A\" transform=\"rotate(-10 118 114)\" letter-spacing=\"1\">WINE</text>\n            <text x=\"118\" y=\"124\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"7.5\" font-weight=\"700\" fill=\"#E9C98A\" transform=\"rotate(-10 118 114)\" letter-spacing=\"1\">GOGGLES</text>\n            <path d=\"M150 84c-6 0-9 4-9 8h18c0-4-3-8-9-8z\" fill=\"url(#shBrass)\"/>\n            <path d=\"M128 200c0 0 6-6 6-30 0-24 8-40 16-42 8 2 16 18 16 42 0 24 6 30 6 30z\" fill=\"url(#shBrass)\" stroke=\"#6B4E14\" stroke-width=\"1.5\"/>\n            <path d=\"M134 128c-3 14-4 40-2 66\" stroke=\"#FFF2C4\" stroke-width=\"3\" opacity=\".6\" fill=\"none\"/>\n            <rect x=\"124\" y=\"198\" width=\"52\" height=\"8\" rx=\"3\" fill=\"url(#shBrass)\" stroke=\"#6B4E14\" stroke-width=\"1.2\"/>\n            <circle cx=\"150\" cy=\"214\" r=\"6\" fill=\"#6B4E14\"/>\n          </g>\n        </svg>", "ornament": "<svg viewBox=\"0 0 300 260\" aria-hidden=\"true\">\n          <defs>\n            <linearGradient id=\"oStone\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#EFE6D6\"/><stop offset=\"1\" stop-color=\"#C9BBA2\"/></linearGradient>\n            <radialGradient id=\"oGlow\" cx=\".5\" cy=\".65\" r=\".7\"><stop offset=\"0\" stop-color=\"#FFE3A3\"/><stop offset=\".5\" stop-color=\"#E88A3A\"/><stop offset=\"1\" stop-color=\"#5A1E0A\"/></radialGradient>\n            <linearGradient id=\"oWood\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\"><stop offset=\"0\" stop-color=\"#5E3519\"/><stop offset=\".5\" stop-color=\"#8E5830\"/><stop offset=\"1\" stop-color=\"#5A3217\"/></linearGradient>\n          </defs>\n          <g class=\"orn-swing\">\n            <path d=\"M150 0V30\" stroke=\"#C0392B\" stroke-width=\"3\"/>\n            <path d=\"M150 30c-14-12-26-6-20 2 4 6 14 4 20-2zM150 30c14-12 26-6 20 2-4 6-14 4-20-2z\" fill=\"#B0242E\"/>\n            <circle cx=\"150\" cy=\"32\" r=\"4\" fill=\"#D4AF55\"/>\n            <path d=\"M96 236V112A54 54 0 0 1 204 112V236Z\" fill=\"url(#oStone)\" stroke=\"#A8977C\" stroke-width=\"2\"/>\n            <path d=\"M118 222V122A32 32 0 0 1 182 122V222Z\" fill=\"url(#oGlow)\"/>\n            <path d=\"M136 172h16c0 12-3 17-8 17s-8-5-8-17z\" fill=\"#9B2335\"/><path d=\"M144 189v16M138 206h12\" stroke=\"#F6E7D8\" stroke-width=\"2\"/>\n            <path d=\"M160 206c-5 0-6-4-6-10s5-8 5-13v-8h4v8c0 5 5 7 5 13s-1 10-6 10z\" fill=\"#2E5130\"/>\n            <g class=\"orn-door\"><path d=\"M118 222V122A32 32 0 0 1 182 122V222Z\" fill=\"url(#oWood)\"/><path d=\"M126 160V124A24 24 0 0 1 174 124V160Z\" fill=\"none\" stroke=\"#3E2210\" stroke-width=\"2\"/><rect x=\"126\" y=\"168\" width=\"48\" height=\"46\" rx=\"2\" fill=\"none\" stroke=\"#3E2210\" stroke-width=\"2\"/><circle cx=\"172\" cy=\"166\" r=\"3.5\" fill=\"#D4AF55\"/></g>\n            <path d=\"M88 236h124v10H88z\" fill=\"#B9A88A\"/>\n            <text x=\"150\" y=\"243.5\" text-anchor=\"middle\" font-family=\"Fraunces,Georgia,serif\" font-size=\"7\" font-weight=\"700\" fill=\"#5A4A2A\" letter-spacing=\"2\">FIRENZE 2026</text>\n            <path d=\"M112 70l2 5 5 1-4 3 1 5-4-3-5 3 1-5-4-3 5-1z\" fill=\"#F3D58A\"/>\n          </g>\n        </svg>"};
+const COLORS=[["#F4EDE0","#7A1F2E","Plaster cream"],["#C8693E","#FFF3E4","Duomo terracotta"],["#5A1420","#F3D58A","Chianti"],["#56636A","#F3E6D6","Pietra serena"]];
+const SIZES=["XS","S","M","L","XL","XXL"];
+const PROD=[
+ {id:"tee",name:"The Toc Toc Tee",eur:28,hint:"Tap for colours",desc:"The knock every window waits for. A small glowing wine door on the chest, Toc toc in hand lettering underneath.",bul:["Heavyweight organic cotton, relaxed fit","Unisex XS to XXL","Printed to order"]},
+ {id:"journal",name:"The Passaporto Journal",eur:24,hint:"Tap to open",desc:"A travel journal that looks like a stamped passport. Every window gets its own page, and partner windows stamp it on the spot.",bul:["Wine red linen cover, gold foil door","96 pages, one per window plus the rest of the trip","Hand drawn map and ribbon marker"]},
+ {id:"bell",name:"The Brass Bell Keychain",eur:14,hint:"Tap to ring",desc:"A tiny solid brass copy of the bell you ring at the window. It really jingles.",bul:["Solid brass, about 3 cm, working clapper","Leather tag stamped WINE GOGGLES"]},
+ {id:"ornament",name:"The Wine Door Ornament",eur:22,hint:"Tap the door",desc:"Open the tiny wooden door and a glass of red is waiting inside. Florence on the tree.",bul:["Hand painted ceramic, about 8 cm","Red ribbon, dated sill, gift boxed"]}
+];
+const BUN=[
+ {id:"knock",name:"The First Knock",items:["tee","bell"],eur:38,was:42,what:"Toc Toc Tee and Brass Bell Keychain"},
+ {id:"couple",name:"The Couple's Kit",items:["journal","journal","bell","bell"],eur:64,was:76,what:"Two Passaporto Journals and two Brass Bell Keychains",star:"FOR TWO"},
+ {id:"natale",name:"Natale a Firenze",items:["ornament","journal","bell"],eur:52,was:60,what:"Ornament, Journal and Keychain in a gift box"},
+ {id:"whole",name:"The Whole Window",items:["tee","journal","bell","ornament"],eur:76,was:88,what:"All four pieces"}
+];
+let bag=store.get("wg_bag",[]),tee={c:0,s:"M"};
+const artNoId=k=>ART[k].replace(/ id="[^"]*"/g,"");
+const eur=n=>"€"+n;
+function drawShop(){
+  $("#shop").innerHTML=PROD.map(p=>`<article class="prod">
+    <button class="stage ${p.id==="journal"?"journal":""}" data-art="${p.id}" aria-label="${p.name}, ${p.hint}">${p.id==="tee"?ART.tee:artNoId(p.id)}<span class="hint">${p.hint}</span>${p.id==="tee"?'<span class="free">Free with a full passport</span>':""}</button>
+    <div class="info"><div class="top"><h3>${p.name}</h3><span class="eur">${eur(p.eur)}</span></div>
+    <p class="desc">${p.desc}</p><ul>${p.bul.map(b=>`<li>${b}</li>`).join("")}</ul>
+    ${p.id==="tee"?`<div class="opts"><div class="swatches" role="group" aria-label="Colour">${COLORS.map((c,i)=>`<button class="sw" style="background:${c[0]}" data-sw="${i}" aria-pressed="${i===tee.c}" aria-label="${c[2]}"></button>`).join("")}<span class="sw-lbl" id="swName">${COLORS[tee.c][2]}</span></div>
+      <div class="sizes" role="group" aria-label="Size">${SIZES.map(s=>`<button class="sz" data-sz="${s}" aria-pressed="${s===tee.s}">${s}</button>`).join("")}</div></div>`:""}
+    <button class="btn primary add" data-add="${p.id}">Add to bag · ${eur(p.eur)}</button></div></article>`).join("");
+  $("#bundles").innerHTML=BUN.map(b=>{let seen={},th="";b.items.forEach(k=>{seen[k]=(seen[k]||0)+1;th+=seen[k]>1?'<span class="x2">x2</span>':artNoId(k)});
+    return`<article class="bundle ${b.star?"star":""}">${b.star?`<span class="ribbon">${b.star}</span>`:""}<div class="thumbs" aria-hidden="true">${th}</div><h3>${b.name}</h3><p class="what">${b.what}</p>
+    <div class="prices"><span class="eur">${eur(b.eur)}</span><span class="was">${eur(b.was)}</span><span class="save">Save ${eur(b.was-b.eur)}</span></div>
+    <button class="btn primary add" data-add="b:${b.id}">Add bundle · ${eur(b.eur)}</button></article>`}).join("");
+  paintTee();
+}
+function paintTee(){const c=COLORS[tee.c],b=document.querySelector('[data-art="tee"] #teeBody'),t=document.querySelector('[data-art="tee"] #teeText');if(b){b.setAttribute("fill",c[0]);t.setAttribute("fill",c[1])}}
+function bagTotal(){return bag.reduce((s,i)=>s+i.eur*i.q,0)}
+function bagCount(){return bag.reduce((s,i)=>s+i.q,0)}
+function saveBag(){store.set("wg_bag",bag);const n=bagCount();$("#bagBtn").hidden=!n;$("#bagN").textContent=n;$("#bagSum").textContent="Bag · "+eur(bagTotal())}
+function addItem(key){
+  let it;if(key.startsWith("b:")){const b=BUN.find(x=>x.id===key.slice(2));it={k:key,name:b.name,eur:b.eur,opt:b.what,art:b.items[0]}}
+  else{const p=PROD.find(x=>x.id===key);const opt=key==="tee"?`${COLORS[tee.c][2]}, size ${tee.s}`:"";it={k:key+(opt?"|"+opt:""),name:p.name,eur:p.eur,opt,art:key}}
+  const ex=bag.find(x=>x.k===it.k);if(ex)ex.q++;else bag.push({...it,q:1});saveBag();
+}
+const ONLINE=/wine-goggles\.com$|netlify\.app$|localhost$/.test(location.hostname);
+async function netlifyPost(form,data){const body=new URLSearchParams({"form-name":form,...data}).toString();
+  const r=await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body});if(!r.ok)throw new Error("post "+r.status)}
+function openBag(){
+  if(!bag.length){$("#bagBody").innerHTML=`<h2 id="bagH">Your bag is empty</h2><p class="foot">Pick something from La Bottega.</p>`}
+  else $("#bagBody").innerHTML=`<h2 id="bagH">Your bag</h2>
+    ${bag.map((i,n)=>`<div class="line">${artNoId(i.art)}<div><b>${i.q>1?i.q+" × ":""}${i.name}</b><small>${i.opt||""}</small></div><div style="text-align:right"><span class="eur" style="font-size:1.05rem">${eur(i.eur*i.q)}</span><br><button class="rm" data-rm="${n}">Remove</button></div></div>`).join("")}
+    <div class="tot"><span>Total</span><span>${eur(bagTotal())}</span></div><p class="note foot" style="margin:0">Shipping is added on the payment link: €6 in Europe, €12 to the UK and North America.</p>
+    <form class="form" id="orderForm"><label for="oName">Name</label><input id="oName" name="name" autocomplete="name" required>
+      <label for="oMail">Email</label><input id="oMail" name="email" type="email" autocomplete="email" required>
+      <label for="oAddr">Shipping address</label><textarea id="oAddr" name="address" autocomplete="street-address" required></textarea>
+      <label for="oCountry">Country</label><input id="oCountry" name="country" autocomplete="country-name" required>
+      <button class="btn primary" type="submit">Place order · ${eur(bagTotal())}</button>
+      <p class="note">We email you a secure payment link within 24 hours. Nothing is charged until you pay it.</p></form>`;
+  $("#bag").hidden=false;document.body.classList.add("locked");$("#bagX").focus();
+}
+function closeBag(){$("#bag").hidden=true;document.body.classList.remove("locked")}
+document.addEventListener("submit",async e=>{
+  if(e.target.id==="orderForm"){e.preventDefault();const f=new FormData(e.target),d=Object.fromEntries(f);d.items=bag.map(i=>`${i.q} x ${i.name}${i.opt?" ("+i.opt+")":""} = €${i.eur*i.q}`).join("\n");d.total="€"+bagTotal();
+    const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="Sending…";
+    try{if(!ONLINE)throw new Error("offline");await netlifyPost("order",d);bag=[];saveBag();
+      $("#bagBody").innerHTML=`<div class="thanks"><h3>Grazie, ${esc(d.name.split(" ")[0])}!</h3><p>Your order is in. Watch ${esc(d.email)} for the payment link within 24 hours.</p><button class="btn" id="bagDone">Back to the windows</button></div>`;cheers()}
+    catch(err){btn.disabled=false;btn.textContent="Place order";toast(ONLINE?"Could not send. Check your connection and try again.":"Orders open on wine-goggles.com")}}
+  if(e.target.id==="teeForm"){e.preventDefault();const d=Object.fromEntries(new FormData(e.target));d.stamps=Object.entries(stamps).map(([k,v])=>k+" "+v).join("\n");
+    const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="Sending…";
+    try{if(!ONLINE)throw new Error("offline");await netlifyPost("passport-tee",d);store.set("wg_tee_claimed",d.email);rewardState=null;renderReward();cheers()}
+    catch(err){btn.disabled=false;btn.textContent="Claim my free tee";toast(ONLINE?"Could not send. Try again in a minute.":"Claim it on wine-goggles.com")}}
+});
+document.addEventListener("click",e=>{
+  const sw=e.target.closest("[data-sw]");if(sw){tee.c=+sw.dataset.sw;document.querySelectorAll("[data-sw]").forEach(b=>b.setAttribute("aria-pressed",b===sw));$("#swName").textContent=COLORS[tee.c][2];paintTee();return}
+  const sz=e.target.closest("[data-sz]");if(sz){tee.s=sz.dataset.sz;document.querySelectorAll("[data-sz]").forEach(b=>b.setAttribute("aria-pressed",b===sz));return}
+  const st=e.target.closest("[data-art]");if(st){const k=st.dataset.art;
+    if(k==="tee"){tee.c=(tee.c+1)%COLORS.length;document.querySelectorAll("[data-sw]").forEach((b,i)=>b.setAttribute("aria-pressed",i===tee.c));$("#swName").textContent=COLORS[tee.c][2];paintTee()}
+    else if(k==="bell"){st.classList.remove("ringing");void st.offsetWidth;st.classList.add("ringing")}
+    else st.classList.toggle("open");return}
+  const a=e.target.closest("[data-add]");if(a){addItem(a.dataset.add);a.classList.add("ok");const t=a.textContent;a.textContent="Added ";setTimeout(()=>{a.classList.remove("ok");a.textContent=t},1400);return}
+  const rm=e.target.closest("[data-rm]");if(rm){bag.splice(+rm.dataset.rm,1);saveBag();openBag();return}
+  if(e.target.closest("#bagBtn")){openBag();return}
+  if(e.target.id==="bag"||e.target.closest("#bagX")||e.target.closest("#bagDone")){closeBag();return}
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("#bag").hidden)closeBag()});
+/* passport reward: a free Toc Toc Tee for every wine window stamped */
+let rewardState=null;
+function renderReward(){
+  const wines=W.filter(w=>w.kind==="wine"&&w.v!=="u"),tot=wines.length,nw=wines.filter(w=>stamps[w.id]).length,claimed=store.get("wg_tee_claimed",null);
+  const state=claimed?"claimed":nw>=tot?"won":"progress:"+nw;
+  $("#perkLine").textContent=nw>=tot?"You filled the passport. Claim your free tee on the Passport tab.":`${tot-nw} more ${tot-nw===1?"window":"windows"} to a free Toc Toc Tee. You have ${nw} of ${tot}.`;
+  if(state===rewardState)return;rewardState=state;const r=$("#reward");r.classList.toggle("won",state!=="progress:"+nw);
+  const head=(h,p)=>`<div class="rhead">${artNoId("tee")}<div><h3>${h}</h3><p>${p}</p></div></div>`;
+  if(claimed){r.innerHTML=head("Your tee is on its way","We have your claim for "+esc(claimed)+". It ships within two weeks. Wear it to the next window.");return}
+  if(nw<tot){r.innerHTML=head("A free Toc Toc Tee",`Stamp all ${tot} confirmed wine windows and the tee is on us, shipped free.`)+`<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${tot}" aria-valuenow="${nw}"><i style="width:${Math.round(nw/tot*100)}%"></i></div><p class="num" style="font-weight:600">${nw} of ${tot} stamped</p>`;return}
+  r.innerHTML=head("Granduca! The tee is yours","Every window stamped. Tell us where to send your free Toc Toc Tee.")+`
+   <form class="form" id="teeForm"><div class="two"><div><label for="tSize">Size</label><select id="tSize" name="size">${SIZES.map(s=>`<option ${s==="M"?"selected":""}>${s}</option>`).join("")}</select></div>
+   <div><label for="tColor">Colour</label><select id="tColor" name="color">${COLORS.map(c=>`<option>${c[2]}</option>`).join("")}</select></div></div>
+   <label for="tName">Name</label><input id="tName" name="name" autocomplete="name" required>
+   <label for="tMail">Email</label><input id="tMail" name="email" type="email" autocomplete="email" required>
+   <label for="tAddr">Shipping address</label><textarea id="tAddr" name="address" autocomplete="street-address" required></textarea>
+   <label for="tCountry">Country</label><input id="tCountry" name="country" autocomplete="country-name" required>
+   <button class="btn primary" type="submit">Claim my free tee</button>
+   <p class="terms">One free tee per person and address, while stocks last. Stamps are checked against your passport history. Shipping is free.</p></form>`;
+}
+drawShop();saveBag();
 
 render();
 setInterval(()=>{render();if(social.db)drawFeed()},60000);
